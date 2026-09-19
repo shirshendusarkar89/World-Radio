@@ -458,14 +458,30 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 .playerStatus.error{color:#ff7c88}
 .playerHint{font-size:9px;color:#6f8e99;text-align:center;margin-top:6px}
 .audioEl{display:none}
-/* Phase 3: the yellow waveform moves ONLY when the native audio element is actually playing. */
-.spectrum:not(.is-playing) .bar{
- animation:none !important;
- transform:scaleY(.06) !important;
- opacity:.28 !important;
+/* ===== ROBUST LIVE AUDIO VISUALIZER =====
+   The spectrum is OFF by default and becomes active only when the
+   native HTMLAudioElement is demonstrably playing. A CSS animation
+   remains available as a guaranteed fallback when Web Audio analysis
+   is blocked by cross-origin stream restrictions.
+*/
+.spectrum .bar{
+  animation:none !important;
+  transform:scaleY(.06);
+  opacity:.28;
+  transition:transform .12s ease, opacity .12s ease;
 }
-.spectrum.is-playing .bar{
- animation:pulse var(--d) ease-in-out infinite alternate;
+.spectrum.audio-active .bar{
+  animation:pulse var(--d) ease-in-out infinite alternate !important;
+  transform-origin:center bottom;
+  opacity:1;
+}
+.spectrum.audio-buffering .bar{
+  animation:pulse .95s ease-in-out infinite alternate !important;
+  opacity:.45;
+}
+.spectrum.audio-reactive .bar{
+  animation:none !important;
+  transition:height .08s linear, transform .08s linear, opacity .08s linear;
 }
 @media(max-width:700px){
  .playerBar{grid-template-columns:1fr 1fr;gap:7px;margin-top:10px;padding:8px}
@@ -827,7 +843,7 @@ body.wrLight{
           <label aria-label="Volume"><span style="font-size:9px;color:#8daab4">VOL</span> <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.85"></label>
           <button class="smallBtn" id="stopBtn" type="button" style="flex:none;padding:8px 12px" disabled>■ STOP</button>
         </div>
-        <div class="playerHint" id="playerHint">Live playback uses the station's public stream URL. Browser support varies by stream format.</div>
+        <div class="playerHint" id="playerHint">The yellow spectrum activates only during actual live playback. Audio-reactive mode is used when the browser permits analysis; otherwise a live CSS visualizer is used.</div>
         <audio class="audioEl" id="audio" preload="none" playsinline></audio>
 
         <div class="bottomInfo">
@@ -1089,24 +1105,148 @@ function updateStatus(){
 const audio=$('audio'), playBtn=$('playBtn'), stopBtn=$('stopBtn'), volume=$('volume'), playerStatus=$('playerStatus'), playerBar=$('playerBar');
 
 /* =========================================================
-   PHASE 3 — AUTHORITATIVE AUDIO STATE
-   The HTMLAudioElement is the source of truth for playback.
-   UI labels are changed only from actual audio events/state.
+   PHASE 3 — AUTHORITATIVE AUDIO STATE + ROBUST VISUALIZER
+   The HTMLAudioElement remains the source of truth.
+   The visualizer is synchronized from native audio events AND a
+   lightweight watchdog, so it cannot get stuck in the OFF state
+   while a stream is actually playing.
    ========================================================= */
 let playerToken=0;
-let playerState='NO_AUDIO'; // PLAYING | PAUSED | STOPPED | NO_AUDIO | ERROR | CONNECTING | BUFFERING
+let playerState='NO_AUDIO';
+
+const spectrumEl=$('spectrum');
+let analyser=null;
+let analyserData=null;
+let audioContext=null;
+let visualizerFrame=0;
+let visualizerMode='css';
 
 function setPlayerStatus(text,type=''){
   playerStatus.textContent=text;
   playerStatus.className='playerStatus'+(type?' '+type:'');
 }
 
+function setSpectrumMode(mode){
+  if(!spectrumEl)return;
+  spectrumEl.classList.remove('audio-active','audio-buffering','audio-reactive');
+  if(mode==='playing'){
+    spectrumEl.classList.add(visualizerMode==='analyser'?'audio-reactive':'audio-active');
+  }else if(mode==='buffering'){
+    spectrumEl.classList.add('audio-buffering');
+  }
+}
+
+function audioIsActuallyPlaying(){
+  return !!(
+    audio &&
+    audio.src &&
+    !audio.paused &&
+    !audio.ended &&
+    audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+  );
+}
+
+function syncSpectrumToAudio(){
+  if(!audio || !spectrumEl)return;
+  if(audioIsActuallyPlaying()){
+    setSpectrumMode('playing');
+  }else if(audio.src && !audio.paused && !audio.ended && playerState==='BUFFERING'){
+    setSpectrumMode('buffering');
+  }else{
+    setSpectrumMode('off');
+  }
+}
+
+function tryEnableAudioAnalysis(){
+  if(analyser || !audio || !audio.src)return;
+  try{
+    if(!audioContext){
+      const AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC)return;
+      audioContext=new AC();
+    }
+    if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+    audio.crossOrigin='anonymous';
+    const source=audioContext.createMediaElementSource(audio);
+    analyser=audioContext.createAnalyser();
+    analyser.fftSize=64;
+    analyser.smoothingTimeConstant=.78;
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+    analyserData=new Uint8Array(analyser.frequencyBinCount);
+    visualizerMode='analyser';
+  }catch(e){
+    analyser=null;
+    analyserData=null;
+    visualizerMode='css';
+  }
+}
+
+function animateSpectrum(){
+  if(!spectrumEl)return;
+
+  if(analyser && analyserData && audioIsActuallyPlaying()){
+    analyser.getByteFrequencyData(analyserData);
+    const bars=spectrumEl.querySelectorAll('.bar');
+    const n=bars.length;
+
+    for(let i=0;i<n;i++){
+      const index=Math.floor(i/n*analyserData.length);
+      const value=analyserData[index]||0;
+      const normalized=value/255;
+      const base=parseFloat(bars[i].dataset.baseHeight||'50');
+      const h=Math.max(8,base*(.25+normalized*1.15));
+
+      bars[i].style.height=h.toFixed(1)+'px';
+      bars[i].style.transform=`scaleY(${(.55+normalized*.8).toFixed(3)})`;
+      bars[i].style.opacity=(.42+normalized*.58).toFixed(2);
+    }
+  }else{
+    const bars=spectrumEl.querySelectorAll('.bar');
+    bars.forEach(b=>{
+      b.style.height='';
+      b.style.transform='';
+      b.style.opacity='';
+    });
+  }
+
+  visualizerFrame=requestAnimationFrame(animateSpectrum);
+}
+
+function startSpectrumEngine(){
+  if(!visualizerFrame)visualizerFrame=requestAnimationFrame(animateSpectrum);
+}
+
+function stopSpectrumEngine(){
+  if(visualizerFrame){
+    cancelAnimationFrame(visualizerFrame);
+    visualizerFrame=0;
+  }
+  if(spectrumEl){
+    spectrumEl.classList.remove('audio-active','audio-buffering','audio-reactive');
+    spectrumEl.querySelectorAll('.bar').forEach(b=>{
+      b.style.height='';
+      b.style.transform='';
+      b.style.opacity='';
+    });
+  }
+}
+
 function setPlayerState(next,text,type=''){
   playerState=next;
-  /* Waveform motion is tied to the authoritative native playback state. */
-  const spectrumEl=document.getElementById('spectrum');
-  if(spectrumEl)spectrumEl.classList.toggle('is-playing',next==='PLAYING');
-  playerBar.classList.toggle('playing',next==='PLAYING');
+
+  if(next==='PLAYING'){
+    setSpectrumMode('playing');
+    startSpectrumEngine();
+    playerBar.classList.add('playing');
+  }else if(next==='BUFFERING'){
+    setSpectrumMode('buffering');
+    startSpectrumEngine();
+    playerBar.classList.remove('playing');
+  }else{
+    playerBar.classList.remove('playing');
+    if(next!=='CONNECTING')stopSpectrumEngine();
+  }
 
   if(next==='PLAYING'){
     playBtn.disabled=false;
@@ -1128,13 +1268,13 @@ function setPlayerState(next,text,type=''){
     playBtn.disabled=!stationObject();
     playBtn.textContent='▶ PLAY LIVE';
     stopBtn.disabled=!stationObject();
-  }else{ // NO_AUDIO
+  }else{
     playBtn.disabled=!stationObject();
     playBtn.textContent='▶ PLAY LIVE';
     stopBtn.disabled=true;
   }
 
-  if(text!==undefined) setPlayerStatus(text,type);
+  if(text!==undefined)setPlayerStatus(text,type);
 }
 
 function resetPlayer(){
@@ -1142,6 +1282,7 @@ function resetPlayer(){
   audio.pause();
   audio.removeAttribute('src');
   audio.load();
+  stopSpectrumEngine();
   setPlayerState('NO_AUDIO','Select a station to prepare the live stream.');
 }
 
@@ -1157,11 +1298,15 @@ async function playSelectedStation(){
 
   try{
     let streamUrl=s.url_resolved||s.url||'';
+
     if(!streamUrl){
       const bases=activeBase?[activeBase,...API_BASES.filter(x=>x!==activeBase)]:API_BASES;
       for(const base of bases){
         try{
-          const r=await fetch(apiUrl(base,'/json/url/'+encodeURIComponent(s.stationuuid)),{headers:{'Accept':'application/json'}});
+          const r=await fetch(
+            apiUrl(base,'/json/url/'+encodeURIComponent(s.stationuuid)),
+            {headers:{'Accept':'application/json'}}
+          );
           if(r.ok){
             const d=await r.json();
             if(d&&d.url)streamUrl=d.url;
@@ -1175,21 +1320,25 @@ async function playSelectedStation(){
     if(token!==playerToken)return false;
     if(!streamUrl)throw new Error('No stream URL was supplied by the station directory.');
 
+    audio.crossOrigin='anonymous';
     audio.src=streamUrl;
     audio.volume=parseFloat(volume.value);
-    setPlayerState('CONNECTING','Connecting to live stream…');
 
-    /* play() only requests playback. PLAYING is declared later by the
-       native "playing" event, so the UI can never claim LIVE prematurely. */
+    setPlayerState('CONNECTING','Connecting to live stream…');
+    tryEnableAudioAnalysis();
+
     await audio.play();
     if(token!==playerToken)return false;
+
     setPlayerState('BUFFERING','Waiting for live audio…');
+    syncSpectrumToAudio();
     return true;
   }catch(e){
     if(token!==playerToken)return false;
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
+    stopSpectrumEngine();
     setPlayerState('ERROR','Stream unavailable — try another station.','error');
     setMessage((e&&e.message)||'The stream could not be started.','error');
     return false;
@@ -1203,20 +1352,23 @@ async function togglePlay(){
     return;
   }
 
-  /* If no stream is loaded, PLAY means start a fresh stream. */
   if(!audio.src){
     await playSelectedStation();
     return;
   }
 
-  /* PAUSED / STOPPED / ERROR -> PLAY (resume or reconnect). */
   if(audio.paused){
     const token=++playerToken;
     setPlayerState('BUFFERING','Resuming live audio…');
+
     try{
+      if(audioContext && audioContext.state==='suspended'){
+        await audioContext.resume().catch(()=>{});
+      }
       await audio.play();
       if(token!==playerToken)return;
       setPlayerState('BUFFERING','Waiting for live audio…');
+      syncSpectrumToAudio();
     }catch(e){
       if(token!==playerToken)return;
       setPlayerState('ERROR','Unable to start the stream.','error');
@@ -1224,7 +1376,6 @@ async function togglePlay(){
     return;
   }
 
-  /* PLAYING -> PAUSE. The pause event will confirm the state. */
   audio.pause();
 }
 
@@ -1233,9 +1384,11 @@ function stopPlayback(){
   audio.pause();
   audio.removeAttribute('src');
   audio.load();
-  /* Explicitly declare STOPPED after the source is removed. This prevents
-     the native pause event from leaving the UI in a false PAUSED state. */
-  setPlayerState('STOPPED',stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.');
+  stopSpectrumEngine();
+  setPlayerState(
+    'STOPPED',
+    stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.'
+  );
 }
 
 playBtn.addEventListener('click',togglePlay);
@@ -1246,6 +1399,52 @@ audio.addEventListener('loadstart',()=>{
   if(audio.src && !audio.paused && playerState!=='PLAYING'){
     setPlayerState('CONNECTING','Connecting to live stream…');
   }
+  syncSpectrumToAudio();
+});
+
+audio.addEventListener('loadedmetadata',()=>{
+  tryEnableAudioAnalysis();
+  syncSpectrumToAudio();
+});
+
+audio.addEventListener('canplay',()=>{
+  if(audio.src && !audio.paused && playerState!=='PLAYING' && playerState!=='STOPPED'){
+    setPlayerState('BUFFERING','Live stream ready — starting audio…');
+  }
+  syncSpectrumToAudio();
+});
+
+audio.addEventListener('canplaythrough',syncSpectrumToAudio);
+
+audio.addEventListener('playing',()=>{
+  const s=stationObject();
+  if(!s || !audio.src)return;
+
+  if(audioContext && audioContext.state==='suspended'){
+    audioContext.resume().catch(()=>{});
+  }
+
+  /* Native PLAYING event = actual live playback. */
+  setPlayerState(
+    'PLAYING',
+    `● LIVE${s.codec?' • '+s.codec:''}${s.bitrate?' • '+s.bitrate+' kbps':''}`,
+    'live'
+  );
+  syncSpectrumToAudio();
+});
+
+audio.addEventListener('timeupdate',()=>{
+  if(audioIsActuallyPlaying() && playerState!=='PLAYING'){
+    const s=stationObject();
+    if(s){
+      setPlayerState(
+        'PLAYING',
+        `● LIVE${s.codec?' • '+s.codec:''}${s.bitrate?' • '+s.bitrate+' kbps':''}`,
+        'live'
+      );
+    }
+  }
+  syncSpectrumToAudio();
 });
 
 audio.addEventListener('waiting',()=>{
@@ -1254,34 +1453,64 @@ audio.addEventListener('waiting',()=>{
   }
 });
 
-audio.addEventListener('canplay',()=>{
-  if(audio.src && !audio.paused && playerState!=='PLAYING' && playerState!=='STOPPED'){
-    setPlayerState('BUFFERING','Live stream ready — starting audio…');
+audio.addEventListener('stalled',()=>{
+  if(audio.src && !audio.paused && playerState!=='STOPPED'){
+    setPlayerState('BUFFERING','Stream temporarily stalled…');
   }
-});
-
-audio.addEventListener('playing',()=>{
-  /* Native event = actual audio is playing. */
-  const s=stationObject();
-  if(!s || !audio.src)return;
-  const suffix=` • ${s.codec||'STREAM'}${s.bitrate?` • ${s.bitrate} kbps`:''}`;
-  setPlayerState('PLAYING',`● LIVE${suffix}`,'live');
 });
 
 audio.addEventListener('pause',()=>{
-  /* STOP explicitly removes src and sets STOPPED. Do not overwrite it with PAUSED. */
-  if(playerState==='STOPPED' || playerState==='NO_AUDIO' || playerState==='ERROR')return;
+  if(playerState==='STOPPED' || playerState==='NO_AUDIO' || playerState==='ERROR'){
+    stopSpectrumEngine();
+    return;
+  }
+
   if(audio.src){
     setPlayerState('PAUSED','Paused');
   }else{
-    setPlayerState('STOPPED',stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.');
+    setPlayerState(
+      'STOPPED',
+      stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.'
+    );
   }
 });
 
+audio.addEventListener('ended',()=>{
+  stopSpectrumEngine();
+  if(playerState!=='STOPPED')setPlayerState('STOPPED','Stream ended.');
+});
+
 audio.addEventListener('error',()=>{
+  stopSpectrumEngine();
   if(playerState==='STOPPED' || playerState==='NO_AUDIO')return;
   setPlayerState('ERROR','Stream error — try another station.','error');
 });
+
+/* Some live streams emit media events differently between browsers.
+   The watchdog keeps the visual state synchronized with the native
+   media state without declaring a stream LIVE merely because play()
+   returned successfully. */
+setInterval(()=>{
+  if(!audio || !audio.src)return;
+
+  if(audioIsActuallyPlaying()){
+    if(playerState!=='PLAYING'){
+      const s=stationObject();
+      if(s){
+        setPlayerState(
+          'PLAYING',
+          `● LIVE${s.codec?' • '+s.codec:''}${s.bitrate?' • '+s.bitrate+' kbps':''}`,
+          'live'
+        );
+      }
+    }
+    syncSpectrumToAudio();
+  }else if(!audio.paused && !audio.ended && playerState!=='STOPPED' && playerState!=='ERROR'){
+    setSpectrumMode('buffering');
+  }else{
+    syncSpectrumToAudio();
+  }
+},250);
 
 function stationObject(){return currentStations.find(s=>s.stationuuid===state.station)||null}
 function updateDisplay(){
@@ -1385,7 +1614,14 @@ $('surpriseBtn').addEventListener('click',async()=>{
 
 /* Phase 3: spectrum animation is enabled only while the audio element is actually playing. */
 const spectrum=$('spectrum');
-[32,64,42,82,55,98,48,72,36,90,61,105,47,78,57,94,41,67,89,50,76,45,101,58,84,39,71,93,52,66,44,87].forEach((h,i)=>{const b=document.createElement('div');b.className='bar';b.style.setProperty('--h',h+'px');b.style.setProperty('--d',(0.45+(i%7)*0.09)+'s');spectrum.appendChild(b)});
+[32,64,42,82,55,98,48,72,36,90,61,105,47,78,57,94,41,67,89,50,76,45,101,58,84,39,71,93,52,66,44,87].forEach((h,i)=>{
+  const b=document.createElement('div');
+  b.className='bar';
+  b.dataset.baseHeight=h;
+  b.style.setProperty('--h',h+'px');
+  b.style.setProperty('--d',(0.45+(i%7)*0.09)+'s');
+  spectrum.appendChild(b);
+});
 fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);updateStatus();updateDisplay();initLanguages();
 
 /* ===== PHASE 5 JavaScript ===== */
