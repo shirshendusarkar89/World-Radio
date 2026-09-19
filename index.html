@@ -447,7 +447,7 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 }
 
 
-/* ===== PHASE 4 LIVE PLAYER ===== */
+/* ===== PHASE 3 LIVE AUDIO STATE ENGINE ===== */
 .playerBar{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;margin:16px auto 0;max-width:820px;padding:10px;border:1px solid #365966;border-radius:14px;background:#07171eaa;position:relative;z-index:5}
 .playBtn{min-width:120px;height:44px;border:1px solid #8b6733;border-radius:10px;background:linear-gradient(#5b3d1d,#3b2815);color:#ffe4ad;font-weight:800;letter-spacing:1px;cursor:pointer;box-shadow:inset 0 1px #fff2}
 .playBtn:hover:not(:disabled){border-color:#ffd36a;transform:translateY(-1px)}
@@ -458,7 +458,15 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 .playerStatus.error{color:#ff7c88}
 .playerHint{font-size:9px;color:#6f8e99;text-align:center;margin-top:6px}
 .audioEl{display:none}
-.playing .bar{animation-duration:var(--d)}
+/* Phase 3: the yellow waveform moves ONLY when the native audio element is actually playing. */
+.spectrum:not(.is-playing) .bar{
+ animation:none !important;
+ transform:scaleY(.06) !important;
+ opacity:.28 !important;
+}
+.spectrum.is-playing .bar{
+ animation:pulse var(--d) ease-in-out infinite alternate;
+}
 @media(max-width:700px){
  .playerBar{grid-template-columns:1fr 1fr;gap:7px;margin-top:10px;padding:8px}
  .playBtn{width:100%;min-width:0;height:46px}
@@ -566,83 +574,6 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 @media(max-width:650px){.explorer{margin-top:10px;border-radius:16px}.explorerHead{padding:11px 12px}.explorerTitle{font-size:10px}.explorerSub{font-size:7px}.explorerBadge{font-size:7px;padding:5px 7px}.explorerBody{min-height:0}.globeWrap{padding:10px}.globeCaption{left:10px;bottom:9px;font-size:9px}.globeLegend{right:10px;bottom:9px;font-size:7px}.explorerInfo{padding:10px;gap:7px}.geoCard{padding:9px}.geoValue{font-size:15px}.geoSmall{font-size:10px}}
 
 
-/* ===== PHASE 7: DISCOVERY & PERSONAL FEATURES ===== */
-.discoveryPanel{
-  margin-top:18px;
-  padding:18px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:18px;
-  background:linear-gradient(145deg,rgba(20,25,35,.96),rgba(8,11,17,.96));
-  box-shadow:0 12px 35px rgba(0,0,0,.28);
-}
-.discoveryTitle{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.discoveryTitle h2{margin:0;font-size:1.08rem;letter-spacing:.04em}
-.discoveryTitle p{margin:4px 0 0;color:#9da8b8;font-size:.84rem}
-.discoveryButtons{display:flex;gap:8px;flex-wrap:wrap}
-.discoveryBtn{
-  border:1px solid rgba(255,255,255,.14);
-  background:#151b25;color:#eaf0f8;
-  border-radius:10px;padding:10px 13px;cursor:pointer;
-  font-weight:700;min-height:42px;
-}
-.discoveryBtn:hover{filter:brightness(1.18)}
-.discoveryBtn.primary{background:#b68b45;color:#101318;border-color:#d7b36d}
-.discoveryBtn.active{outline:2px solid rgba(255,255,255,.22)}
-.discoveryGrid{
-  display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px;
-}
-.featureCard{
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;padding:14px;background:rgba(255,255,255,.025);
-}
-.featureCard h3{margin:0 0 9px;font-size:.92rem}
-.radioPassport{
-  display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center;
-}
-.passportGlobe{
-  width:92px;height:92px;border-radius:50%;
-  display:grid;place-items:center;font-size:3rem;
-  background:radial-gradient(circle at 35% 30%,#4e6d7b,#17212b 58%,#070a0e 100%);
-  box-shadow:inset -10px -12px 20px rgba(0,0,0,.45),0 0 22px rgba(94,161,185,.18);
-}
-.passportStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.passportStat{background:rgba(255,255,255,.04);border-radius:10px;padding:9px;text-align:center}
-.passportStat b{display:block;font-size:1.1rem}
-.passportStat span{font-size:.7rem;color:#9da8b8}
-.favList,.recentList{display:grid;gap:8px;max-height:250px;overflow:auto}
-.stationItem{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);
-}
-.stationItemMain{min-width:0}
-.stationItemName{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stationItemMeta{font-size:.72rem;color:#9da8b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.itemActions{display:flex;gap:5px;flex-shrink:0}
-.miniBtn{
-  border:1px solid rgba(255,255,255,.12);background:#111722;color:#dce5ef;
-  border-radius:8px;padding:7px 9px;cursor:pointer;
-}
-.emptyState{color:#8f99a8;font-size:.82rem;padding:10px 2px}
-.moodGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.moodBtn{
-  min-height:48px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
-  background:#111722;color:#dce5ef;cursor:pointer;font-size:.78rem;font-weight:700;
-}
-.moodBtn:hover{background:#1b2430}
-.discoveryNote{font-size:.72rem;color:#7f8998;margin-top:10px}
-@media(max-width:760px){
-  .discoveryGrid{grid-template-columns:1fr}
-  .passportStats{grid-template-columns:repeat(3,1fr)}
-  .moodGrid{grid-template-columns:repeat(2,1fr)}
-  .discoveryButtons{width:100%}
-  .discoveryBtn{flex:1 1 130px}
-}
-@media(max-width:420px){
-  .radioPassport{grid-template-columns:1fr}
-  .passportGlobe{margin:auto}
-}
-
-
 /* =========================================================
    PHASE 8 — FINAL POLISH & DEPLOYMENT READY
    ========================================================= */
@@ -727,14 +658,6 @@ body.wrLight{
   border:1px solid var(--wr-border);padding:5px 8px;border-radius:999px;
   background:rgba(255,255,255,.025);
 }
-.wrFeatureStrip{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 15px;
-}
-.wrFeature{
-  padding:10px;border:1px solid var(--wr-border);border-radius:11px;
-  background:rgba(255,255,255,.025);text-align:center;
-}
-.wrFeature b{display:block;font-size:.77rem}.wrFeature span{color:var(--wr-muted);font-size:.65rem}
 .wrFooter{
   margin-top:28px;padding:18px 4px;border-top:1px solid var(--wr-border);
   color:var(--wr-muted);font-size:.7rem;text-align:center;
@@ -767,9 +690,6 @@ body.wrLight{
 .wrModal h3{margin:0 0 9px}.wrModal p{color:var(--wr-muted);font-size:.82rem;line-height:1.55}
 .wrModalClose{float:right}
 .wrInstallHint{display:none}
-@media(max-width:800px){
-  .wrFeatureStrip{grid-template-columns:repeat(2,1fr)}
-}
 @media(max-width:520px){
   .wrTopBar{padding:8px 9px}
   .wrBrandText span{display:none}
@@ -793,34 +713,7 @@ body.wrLight{
 <body>
 
 <!-- ===== PHASE 8 GLOBAL HEADER ===== -->
-<header class="wrTopBar" id="wrTopBar">
-  <div class="wrBrand">
-    <div class="wrBrandMark">📻</div>
-    <div class="wrBrandText">
-      <strong>WORLD RADIO</strong>
-      <span>One planet • thousands of voices</span>
-    </div>
-  </div>
-  <div class="wrTopActions">
-    <div class="wrStatusPill"><span class="wrStatusDot" id="wrStatusDot"></span><span id="wrStatusText">READY</span></div>
-    <button class="wrTopBtn" id="wrThemeBtn" title="Toggle appearance">☾</button>
-    <button class="wrTopBtn" id="wrAboutBtn" title="About World Radio">ⓘ</button>
-  </div>
-</header>
-
 <div class="app">
-  <header class="header">
-    <div class="brand">
-      <div class="brandMark">🌍</div>
-      <div>
-        <h1>WORLD RADIO</h1>
-        <div class="subtitle">HEAR THE WORLD • ONE STATION AT A TIME</div>
-      </div>
-    </div>
-    <div class="badge">PHASE 6 • WORLD EXPLORER</div>
-  </header>
-
-  
 <!-- ===== PHASE 8 PRODUCT HEADER ===== -->
 <section class="wrHero">
   <h1>World Radio</h1>
@@ -829,13 +722,6 @@ body.wrLight{
     <span>🌐 Worldwide</span><span>🎙 Live Broadcasts</span><span>📻 Analog Spirit</span>
   </div>
 </section>
-<div class="wrFeatureStrip">
-  <div class="wrFeature"><b>🌍 WORLDWIDE</b><span>Discover stations by place</span></div>
-  <div class="wrFeature"><b>🗣 LANGUAGES</b><span>Listen across cultures</span></div>
-  <div class="wrFeature"><b>📡 LIVE</b><span>Stream when available</span></div>
-  <div class="wrFeature"><b>♥ PERSONAL</b><span>Favourites & history</span></div>
-</div>
-
 <main class="shell">
     <section class="controls">
       <div class="sectionTitle">SELECT YOUR RADIO JOURNEY</div>
@@ -1101,13 +987,92 @@ function uniqueCountries(stations){
   });
   return [...map.values()].sort((a,b)=>a.value.localeCompare(b.value));
 }
-function uniqueLanguages(data){
+/*
+ * PHASE 2 — OFFICIAL-LANGUAGE FILTER
+ *
+ * The Radio Browser /json/languages endpoint contains many language labels
+ * because it describes languages attached to stations.  That is useful for
+ * discovery, but it is not an official-language register.
+ *
+ * We therefore cross-check the returned language names against the Unicode
+ * CLDR territory language data.  CLDR marks languages with officialStatus:
+ *   official            = nationally official
+ *   official_regional   = officially recognized in a region/territory
+ *   de_facto_official   = de-facto official / working official status
+ *
+ * Languages that are merely spoken, widely used, minority, or foreign are
+ * not admitted to the dropdown.  The final list is de-duplicated and sorted
+ * strictly A → Z.
+ */
+const CLDR_LANGUAGE_URL =
+  'https://raw.githubusercontent.com/unicode-org/cldr/main/common/supplemental/supplementalData.xml';
+
+const LANGUAGE_NAME_ALIASES = new Map([
+  ['castilian','spanish'],
+  ['spanish castilian','spanish'],
+  ['mandarin','chinese'],
+  ['mandarin chinese','chinese'],
+  ['standard chinese','chinese'],
+  ['chinese traditional','chinese'],
+  ['chinese simplified','chinese'],
+  ['persian dari','dari'],
+  ['persian (dari)','dari'],
+  ['farsi','persian'],
+  ['burmese','myanmar'],
+  ['swazi','swati'],
+  ['serbo croatian','serbian'],
+  ['rundi','kirundi'],
+  ['malayalam','malayalam'],
+  ['macedonian','macedonian'],
+  ['portuguese brazilian','portuguese'],
+  ['english uk','english'],
+  ['english us','english']
+]);
+
+function normalizeLanguageName(s){
+  return String(s||'')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/\([^)]*\)/g,'')
+    .replace(/[’'`]/g,'')
+    .replace(/[^a-zA-Z0-9]+/g,' ')
+    .trim()
+    .toLowerCase();
+}
+
+function canonicalLanguageName(s){
+  const n=normalizeLanguageName(s);
+  return LANGUAGE_NAME_ALIASES.get(n)||n;
+}
+
+async function fetchOfficialLanguageNames(){
+  const r=await fetch(CLDR_LANGUAGE_URL,{cache:'no-store',headers:{Accept:'application/xml,text/xml'}});
+  if(!r.ok)throw new Error('CLDR HTTP '+r.status);
+  const xml=await r.text();
+  const official=new Set();
+  const re=/<languagePopulation\b([^>]*\bofficialStatus="(?:official|official_regional|de_facto_official)"[^>]*)\/>(?:\s*<!--\s*([^>]*?)\s*-->)?/g;
+  let m;
+  while((m=re.exec(xml))){
+    const attrs=m[1]||'', comment=(m[2]||'').trim();
+    const tm=attrs.match(/\btype="([^"]+)"/);
+    let name=comment;
+    if(!name&&tm){
+      const base=tm[1].split('_')[0];
+      try{name=new Intl.DisplayNames(['en'],{type:'language'}).of(base)||'';}catch(_){name='';}
+    }
+    if(name)official.add(canonicalLanguageName(name));
+  }
+  if(!official.size)throw new Error('CLDR returned no official languages');
+  return official;
+}
+
+function uniqueLanguages(data,officialNames){
   const arr=(Array.isArray(data)?data:[])
     .filter(x=>x&&x.name&&Number(x.stationcount||0)>0)
-    .map(x=>String(x.name).trim());
+    .map(x=>String(x.name).trim())
+    .filter(name=>officialNames.has(canonicalLanguageName(name)));
 
   // STRICT LANGUAGE ORDER: A → Z.
-  // Station count is deliberately ignored for ordering.
   return [...new Set(arr)].sort((a,b)=>
     a.localeCompare(b, undefined, {sensitivity:'base', numeric:false})
   );
@@ -1122,51 +1087,201 @@ function updateStatus(){
 }
 
 const audio=$('audio'), playBtn=$('playBtn'), stopBtn=$('stopBtn'), volume=$('volume'), playerStatus=$('playerStatus'), playerBar=$('playerBar');
+
+/* =========================================================
+   PHASE 3 — AUTHORITATIVE AUDIO STATE
+   The HTMLAudioElement is the source of truth for playback.
+   UI labels are changed only from actual audio events/state.
+   ========================================================= */
 let playerToken=0;
-function setPlayerStatus(text,type=''){playerStatus.textContent=text;playerStatus.className='playerStatus'+(type?' '+type:'')}
-function resetPlayer(){playerToken++;audio.pause();audio.removeAttribute('src');audio.load();playBtn.disabled=true;stopBtn.disabled=true;playBtn.textContent='▶ PLAY LIVE';playerBar.classList.remove('playing');setPlayerStatus('Select a station to prepare the live stream.');}
+let playerState='NO_AUDIO'; // PLAYING | PAUSED | STOPPED | NO_AUDIO | ERROR | CONNECTING | BUFFERING
+
+function setPlayerStatus(text,type=''){
+  playerStatus.textContent=text;
+  playerStatus.className='playerStatus'+(type?' '+type:'');
+}
+
+function setPlayerState(next,text,type=''){
+  playerState=next;
+  /* Waveform motion is tied to the authoritative native playback state. */
+  const spectrumEl=document.getElementById('spectrum');
+  if(spectrumEl)spectrumEl.classList.toggle('is-playing',next==='PLAYING');
+  playerBar.classList.toggle('playing',next==='PLAYING');
+
+  if(next==='PLAYING'){
+    playBtn.disabled=false;
+    playBtn.textContent='Ⅱ PAUSE';
+    stopBtn.disabled=false;
+  }else if(next==='CONNECTING' || next==='BUFFERING'){
+    playBtn.disabled=true;
+    playBtn.textContent=next==='CONNECTING'?'⏳ CONNECTING':'⏳ BUFFERING';
+    stopBtn.disabled=false;
+  }else if(next==='PAUSED'){
+    playBtn.disabled=false;
+    playBtn.textContent='▶ PLAY LIVE';
+    stopBtn.disabled=false;
+  }else if(next==='STOPPED'){
+    playBtn.disabled=!stationObject();
+    playBtn.textContent='▶ PLAY LIVE';
+    stopBtn.disabled=!stationObject();
+  }else if(next==='ERROR'){
+    playBtn.disabled=!stationObject();
+    playBtn.textContent='▶ PLAY LIVE';
+    stopBtn.disabled=!stationObject();
+  }else{ // NO_AUDIO
+    playBtn.disabled=!stationObject();
+    playBtn.textContent='▶ PLAY LIVE';
+    stopBtn.disabled=true;
+  }
+
+  if(text!==undefined) setPlayerStatus(text,type);
+}
+
+function resetPlayer(){
+  playerToken++;
+  audio.pause();
+  audio.removeAttribute('src');
+  audio.load();
+  setPlayerState('NO_AUDIO','Select a station to prepare the live stream.');
+}
+
 async function playSelectedStation(){
-  const s=stationObject(); if(!s){setPlayerStatus('Select a station first.','error');return;}
+  const s=stationObject();
+  if(!s){
+    setPlayerState('NO_AUDIO','Select a station first.','error');
+    return false;
+  }
+
   const token=++playerToken;
-  playBtn.disabled=true;stopBtn.disabled=true;playBtn.textContent='⏳ CONNECTING';setPlayerStatus('Connecting to '+(s.name||'station')+'…');
+  setPlayerState('CONNECTING','Connecting to '+(s.name||'station')+'…');
+
   try{
-    // Count the station click as recommended by Radio Browser when playback starts.
-    const bases=activeBase?[activeBase,...API_BASES.filter(x=>x!==activeBase)]:API_BASES;
     let streamUrl=s.url_resolved||s.url||'';
-    for(const base of bases){
-      try{
-        const r=await fetch(apiUrl(base,'/json/url/'+encodeURIComponent(s.stationuuid)),{headers:{'Accept':'application/json'}});
-        if(r.ok){const d=await r.json();if(d&&d.url)streamUrl=d.url;activeBase=base;break;}
-      }catch(_e){}
+    if(!streamUrl){
+      const bases=activeBase?[activeBase,...API_BASES.filter(x=>x!==activeBase)]:API_BASES;
+      for(const base of bases){
+        try{
+          const r=await fetch(apiUrl(base,'/json/url/'+encodeURIComponent(s.stationuuid)),{headers:{'Accept':'application/json'}});
+          if(r.ok){
+            const d=await r.json();
+            if(d&&d.url)streamUrl=d.url;
+            activeBase=base;
+            if(streamUrl)break;
+          }
+        }catch(_e){}
+      }
     }
-    if(token!==playerToken)return;
+
+    if(token!==playerToken)return false;
     if(!streamUrl)throw new Error('No stream URL was supplied by the station directory.');
+
     audio.src=streamUrl;
     audio.volume=parseFloat(volume.value);
+    setPlayerState('CONNECTING','Connecting to live stream…');
+
+    /* play() only requests playback. PLAYING is declared later by the
+       native "playing" event, so the UI can never claim LIVE prematurely. */
     await audio.play();
-    if(token!==playerToken)return;
-    playBtn.disabled=false;stopBtn.disabled=false;playBtn.textContent='Ⅱ PAUSE';playerBar.classList.add('playing');setPlayerStatus('● LIVE • '+(s.codec||'STREAM')+(s.bitrate?' • '+s.bitrate+' kbps':''),'live');
-    updateDisplay();
+    if(token!==playerToken)return false;
+    setPlayerState('BUFFERING','Waiting for live audio…');
+    return true;
   }catch(e){
-    if(token!==playerToken)return;
-    playBtn.disabled=false;stopBtn.disabled=false;playBtn.textContent='▶ PLAY LIVE';playerBar.classList.remove('playing');
-    const msg=(e&&e.message)||'The stream could not be started.';
-    setPlayerStatus('Stream unavailable — try another station.','error');
-    setMessage(msg,'error');
+    if(token!==playerToken)return false;
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    setPlayerState('ERROR','Stream unavailable — try another station.','error');
+    setMessage((e&&e.message)||'The stream could not be started.','error');
+    return false;
   }
 }
-function togglePlay(){
-  if(!stationObject())return;
-  if(!audio.src){playSelectedStation();return;}
-  if(audio.paused){audio.play().then(()=>{playBtn.textContent='Ⅱ PAUSE';playerBar.classList.add('playing');setPlayerStatus('● LIVE','live')}).catch(()=>playSelectedStation())}
-  else{audio.pause();playBtn.textContent='▶ PLAY LIVE';playerBar.classList.remove('playing');setPlayerStatus('Paused')}
+
+async function togglePlay(){
+  const s=stationObject();
+  if(!s){
+    setPlayerState('NO_AUDIO','Select a station first.','error');
+    return;
+  }
+
+  /* If no stream is loaded, PLAY means start a fresh stream. */
+  if(!audio.src){
+    await playSelectedStation();
+    return;
+  }
+
+  /* PAUSED / STOPPED / ERROR -> PLAY (resume or reconnect). */
+  if(audio.paused){
+    const token=++playerToken;
+    setPlayerState('BUFFERING','Resuming live audio…');
+    try{
+      await audio.play();
+      if(token!==playerToken)return;
+      setPlayerState('BUFFERING','Waiting for live audio…');
+    }catch(e){
+      if(token!==playerToken)return;
+      setPlayerState('ERROR','Unable to start the stream.','error');
+    }
+    return;
+  }
+
+  /* PLAYING -> PAUSE. The pause event will confirm the state. */
+  audio.pause();
 }
-function stopPlayback(){playerToken++;audio.pause();audio.removeAttribute('src');audio.load();playBtn.disabled=!stationObject();stopBtn.disabled=!stationObject();playBtn.textContent='▶ PLAY LIVE';playerBar.classList.remove('playing');setPlayerStatus(stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.');}
-playBtn.addEventListener('click',togglePlay);stopBtn.addEventListener('click',stopPlayback);volume.addEventListener('input',()=>{audio.volume=parseFloat(volume.value)});
-audio.addEventListener('waiting',()=>{if(!audio.paused)setPlayerStatus('Buffering…')});
-audio.addEventListener('playing',()=>{playBtn.textContent='Ⅱ PAUSE';playBtn.disabled=false;stopBtn.disabled=false;playerBar.classList.add('playing');setPlayerStatus('● LIVE','live')});
-audio.addEventListener('pause',()=>{if(audio.src){playBtn.textContent='▶ PLAY LIVE';playBtn.disabled=false;playerBar.classList.remove('playing')}});
-audio.addEventListener('error',()=>{if(audio.src){playBtn.disabled=false;stopBtn.disabled=false;playerBar.classList.remove('playing');playBtn.textContent='▶ PLAY LIVE';setPlayerStatus('Stream error — try another station.','error')}});
+
+function stopPlayback(){
+  playerToken++;
+  audio.pause();
+  audio.removeAttribute('src');
+  audio.load();
+  /* Explicitly declare STOPPED after the source is removed. This prevents
+     the native pause event from leaving the UI in a false PAUSED state. */
+  setPlayerState('STOPPED',stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.');
+}
+
+playBtn.addEventListener('click',togglePlay);
+stopBtn.addEventListener('click',stopPlayback);
+volume.addEventListener('input',()=>{audio.volume=parseFloat(volume.value)});
+
+audio.addEventListener('loadstart',()=>{
+  if(audio.src && !audio.paused && playerState!=='PLAYING'){
+    setPlayerState('CONNECTING','Connecting to live stream…');
+  }
+});
+
+audio.addEventListener('waiting',()=>{
+  if(audio.src && !audio.paused && playerState!=='STOPPED'){
+    setPlayerState('BUFFERING','Buffering live audio…');
+  }
+});
+
+audio.addEventListener('canplay',()=>{
+  if(audio.src && !audio.paused && playerState!=='PLAYING' && playerState!=='STOPPED'){
+    setPlayerState('BUFFERING','Live stream ready — starting audio…');
+  }
+});
+
+audio.addEventListener('playing',()=>{
+  /* Native event = actual audio is playing. */
+  const s=stationObject();
+  if(!s || !audio.src)return;
+  const suffix=` • ${s.codec||'STREAM'}${s.bitrate?` • ${s.bitrate} kbps`:''}`;
+  setPlayerState('PLAYING',`● LIVE${suffix}`,'live');
+});
+
+audio.addEventListener('pause',()=>{
+  /* STOP explicitly removes src and sets STOPPED. Do not overwrite it with PAUSED. */
+  if(playerState==='STOPPED' || playerState==='NO_AUDIO' || playerState==='ERROR')return;
+  if(audio.src){
+    setPlayerState('PAUSED','Paused');
+  }else{
+    setPlayerState('STOPPED',stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.');
+  }
+});
+
+audio.addEventListener('error',()=>{
+  if(playerState==='STOPPED' || playerState==='NO_AUDIO')return;
+  setPlayerState('ERROR','Stream error — try another station.','error');
+});
 
 function stationObject(){return currentStations.find(s=>s.stationuuid===state.station)||null}
 function updateDisplay(){
@@ -1185,16 +1300,21 @@ function updateDisplay(){
 function hashCode(str){let h=0;for(let i=0;i<str.length;i++)h=((h<<5)-h)+str.charCodeAt(i)|0;return Math.abs(h)}
 
 async function initLanguages(){
-  setBusy('language',true);setMessage('Connecting to the worldwide radio directory…');
+  setBusy('language',true);setMessage('Connecting to the worldwide radio directory and official-language register…');
   try{
-    const data=await fetchJson('/json/languages',{order:'stationcount',reverse:'true',hidebroken:'true',limit:'2000'});
-    const langs=uniqueLanguages(data);
-    if(!langs.length)throw new Error('No languages returned');
+    const [data,officialNames]=await Promise.all([
+      fetchJson('/json/languages',{order:'stationcount',reverse:'true',hidebroken:'true',limit:'2000'}),
+      fetchOfficialLanguageNames()
+    ]);
+    const langs=uniqueLanguages(data,officialNames);
+    if(!langs.length)throw new Error('No official-language radio entries returned');
     fillSelect(language,langs,'Select language');setLevelEnabled('language',true);$('state-language').textContent='READY';
-    $('country-helper').textContent='Choose a language first.';setMessage(`Worldwide directory connected. ${langs.length} language entries are available.`,'success');
+    $('country-helper').textContent='Choose an official language first.';
+    setMessage(`Worldwide directory connected. ${langs.length} official-language entries are available.`,'success');
   }catch(e){
-    setLevelEnabled('language',false);setMessage('The worldwide radio directory could not be reached. Please use Reload / try again.','error');
-    $('country-helper').textContent='Waiting for the worldwide directory.';
+    setLevelEnabled('language',false);
+    setMessage('The official-language register or worldwide radio directory could not be reached. Please use Reload / try again.','error');
+    $('country-helper').textContent='Waiting for the official-language register and worldwide directory.';
   }finally{setBusy('language',false);updateStatus();updateDisplay()}
 }
 async function loadCountries(){
@@ -1245,7 +1365,7 @@ function selectValue(level,value){
   if(level==='language')loadCountries();
   else if(level==='country')loadCategories();
   else if(level==='category')loadStations();
-  else {resetPlayer(); playBtn.disabled=false; stopBtn.disabled=false; updateStatus();updateDisplay(); setPlayerStatus('Ready — press PLAY LIVE to start this station.'); setMessage('Station selected. Press PLAY LIVE to start the public stream.','success');}
+  else {resetPlayer(); updateStatus();updateDisplay(); setMessage('Station selected. Attempting automatic playback of the public stream.','success'); playSelectedStation();}
 }
 function navigate(level,dir){
   const sel=$(level);if(sel.disabled||sel.options.length<=1)return;
@@ -1263,7 +1383,7 @@ $('surpriseBtn').addEventListener('click',async()=>{
   const li=1+Math.floor(Math.random()*(language.options.length-1));selectValue('language',language.options[li].value);
 });
 
-/* The Phase-1 spectrum remains a visual preview until Phase 4 connects real audio. */
+/* Phase 3: spectrum animation is enabled only while the audio element is actually playing. */
 const spectrum=$('spectrum');
 [32,64,42,82,55,98,48,72,36,90,61,105,47,78,57,94,41,67,89,50,76,45,101,58,84,39,71,93,52,66,44,87].forEach((h,i)=>{const b=document.createElement('div');b.className='bar';b.style.setProperty('--h',h+'px');b.style.setProperty('--d',(0.45+(i%7)*0.09)+'s');spectrum.appendChild(b)});
 fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);updateStatus();updateDisplay();initLanguages();
@@ -1354,7 +1474,7 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
     });
     audio.addEventListener("pause",()=>{
       status.classList.remove("live");
-      statusText.textContent="PAUSED";
+      statusText.textContent=(typeof playerState!=="undefined" && playerState==="STOPPED")?"STOPPED":"PAUSED";
     });
     audio.addEventListener("waiting",()=>{
       status.classList.remove("live");
@@ -1500,320 +1620,6 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
 
 </script>
 
-<!-- ===== PHASE 7: DISCOVERY & PERSONAL FEATURES ===== -->
-<section class="discoveryPanel" id="phase7Discovery">
-  <div class="discoveryTitle">
-    <div>
-      <h2>✦ WORLD RADIO DISCOVERY</h2>
-      <p>Discover stations, save favourites and build your personal radio journey.</p>
-    </div>
-    <div class="discoveryButtons">
-      <button class="discoveryBtn primary" id="surpriseStationBtn">✦ Surprise Me</button>
-      <button class="discoveryBtn" id="clearHistoryBtn">Clear History</button>
-    </div>
-  </div>
-
-  <div class="discoveryGrid">
-    <div class="featureCard">
-      <h3>🧭 Radio Passport</h3>
-      <div class="radioPassport">
-        <div class="passportGlobe">🌐</div>
-        <div>
-          <div class="passportStats">
-            <div class="passportStat"><b id="passportStations">0</b><span>Stations</span></div>
-            <div class="passportStat"><b id="passportCountries">0</b><span>Countries</span></div>
-            <div class="passportStat"><b id="passportLanguages">0</b><span>Languages</span></div>
-          </div>
-          <div class="discoveryNote">Your passport grows as you discover and play stations.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="featureCard">
-      <h3>🎭 Listen by Mood</h3>
-      <div class="moodGrid">
-        <button class="moodBtn" data-mood="Relax">☁ Relax</button>
-        <button class="moodBtn" data-mood="Energy">⚡ Energy</button>
-        <button class="moodBtn" data-mood="Focus">◉ Focus</button>
-        <button class="moodBtn" data-mood="Love">♥ Love</button>
-        <button class="moodBtn" data-mood="News">◈ News</button>
-        <button class="moodBtn" data-mood="Comedy">☺ Comedy</button>
-        <button class="moodBtn" data-mood="Jazz">♫ Jazz</button>
-        <button class="moodBtn" data-mood="Spiritual">✧ Spiritual</button>
-      </div>
-      <div class="discoveryNote" id="moodStatus">Choose a mood to filter the available categories.</div>
-    </div>
-
-    <div class="featureCard">
-      <h3>♥ Favourites</h3>
-      <div class="favList" id="favList"></div>
-    </div>
-
-    <div class="featureCard">
-      <h3>◷ Recently Played</h3>
-      <div class="recentList" id="recentList"></div>
-    </div>
-  </div>
-</section>
-
-
-<script>
-/* ===== PHASE 7 JAVASCRIPT ===== */
-(function(){
-  "use strict";
-
-  const FAV_KEY = "worldRadio_phase7_favourites_v1";
-  const RECENT_KEY = "worldRadio_phase7_recent_v1";
-  const MAX_RECENT = 12;
-
-  function load(key){
-    try { return JSON.parse(localStorage.getItem(key) || "[]"); }
-    catch(e){ return []; }
-  }
-  function save(key,value){
-    try { localStorage.setItem(key,JSON.stringify(value)); }
-    catch(e){}
-  }
-  function clean(v){
-    return String(v ?? "").trim();
-  }
-
-  let favourites = load(FAV_KEY);
-  let recent = load(RECENT_KEY);
-
-  function getAudio(){
-    return document.querySelector("audio");
-  }
-
-  function selectedText(id){
-    const el = document.getElementById(id);
-    if(!el) return "";
-    return clean(el.value || (el.selectedOptions && el.selectedOptions[0] ? el.selectedOptions[0].textContent : ""));
-  }
-
-  function currentStation(){
-    /* Try common Phase 3–6 globals first. */
-    let st = null;
-    try{
-      if(typeof window.currentStation === "object" && window.currentStation) st = window.currentStation;
-    }catch(e){}
-    try{
-      if(!st && typeof window.selectedStation === "object" && window.selectedStation) st = window.selectedStation;
-    }catch(e){}
-
-    const name =
-      clean(st && (st.name || st.station || st.title)) ||
-      selectedText("station") ||
-      selectedText("stationSelect") ||
-      clean(document.querySelector("#stationName")?.textContent);
-
-    const country =
-      clean(st && (st.country || st.countrycode)) ||
-      selectedText("country") || selectedText("countrySelect");
-
-    const language =
-      clean(st && st.language) ||
-      selectedText("language") || selectedText("languageSelect");
-
-    const url =
-      clean(st && (st.url_resolved || st.url || st.stream)) ||
-      clean(getAudio()?.src);
-
-    const favicon = clean(st && st.favicon);
-    const tags = clean(st && (st.tags || st.category));
-
-    if(!name && !url) return null;
-    return {
-      name: name || "Unknown station",
-      country, language, url, favicon, tags,
-      addedAt: Date.now()
-    };
-  }
-
-  function stationKey(st){
-    return clean(st.url) || (clean(st.name)+"|"+clean(st.country)+"|"+clean(st.language)).toLowerCase();
-  }
-
-  function addRecent(st){
-    if(!st) return;
-    const key = stationKey(st);
-    recent = [st].concat(recent.filter(x => stationKey(x)!==key)).slice(0,MAX_RECENT);
-    save(RECENT_KEY,recent);
-    renderRecent();
-    updatePassport();
-  }
-
-  function isFav(st){
-    return !!st && favourites.some(x => stationKey(x)===stationKey(st));
-  }
-
-  function toggleFavourite(st){
-    if(!st) return;
-    const key = stationKey(st);
-    if(isFav(st)) favourites = favourites.filter(x => stationKey(x)!==key);
-    else favourites = [st].concat(favourites).slice(0,100);
-    save(FAV_KEY,favourites);
-    renderFavourites();
-    updatePassport();
-  }
-
-  function stationHTML(st, fav){
-    const title = clean(st.name) || "Unnamed station";
-    const meta = [st.country,st.language].filter(Boolean).join(" • ");
-    return `<div class="stationItem">
-      <div class="stationItemMain">
-        <div class="stationItemName" title="${escapeHTML(title)}">${escapeHTML(title)}</div>
-        <div class="stationItemMeta">${escapeHTML(meta || "Worldwide")}</div>
-      </div>
-      <div class="itemActions">
-        <button class="miniBtn" data-action="play" data-key="${escapeHTML(stationKey(st))}">▶</button>
-        ${fav ? `<button class="miniBtn" data-action="fav" data-key="${escapeHTML(stationKey(st))}">♥</button>`
-              : `<button class="miniBtn" data-action="fav" data-key="${escapeHTML(stationKey(st))}">♡</button>`}
-      </div>
-    </div>`;
-  }
-
-  function escapeHTML(v){
-    return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-  }
-
-  function renderFavourites(){
-    const box=document.getElementById("favList");
-    if(!box) return;
-    box.innerHTML = favourites.length
-      ? favourites.map(x=>stationHTML(x,true)).join("")
-      : `<div class="emptyState">No favourite stations yet. Tune to a station and press ♥ to save it.</div>`;
-  }
-
-  function renderRecent(){
-    const box=document.getElementById("recentList");
-    if(!box) return;
-    box.innerHTML = recent.length
-      ? recent.map(x=>stationHTML(x,false)).join("")
-      : `<div class="emptyState">Your recently played stations will appear here.</div>`;
-  }
-
-  function updatePassport(){
-    const stations = new Set();
-    const countries = new Set();
-    const languages = new Set();
-
-    recent.concat(favourites).forEach(x=>{
-      const k=stationKey(x);
-      if(k) stations.add(k);
-      if(clean(x.country)) countries.add(clean(x.country).toLowerCase());
-      if(clean(x.language)) languages.add(clean(x.language).toLowerCase());
-    });
-
-    const a=document.getElementById("passportStations");
-    const b=document.getElementById("passportCountries");
-    const c=document.getElementById("passportLanguages");
-    if(a)a.textContent=stations.size;
-    if(b)b.textContent=countries.size;
-    if(c)c.textContent=languages.size;
-  }
-
-  function findStored(key){
-    return favourites.concat(recent).find(x=>stationKey(x)===key) || null;
-  }
-
-  function playStored(st){
-    if(!st) return;
-    /* Prefer the application's own station selection function if available. */
-    try{
-      if(typeof window.playStation === "function"){ window.playStation(st); return; }
-    }catch(e){}
-    const audio=getAudio();
-    if(audio && st.url){
-      audio.src=st.url;
-      audio.play().catch(()=>{});
-    }
-  }
-
-  document.addEventListener("click",function(e){
-    const btn=e.target.closest("[data-action]");
-    if(!btn) return;
-    const st=findStored(btn.dataset.key);
-    if(!st) return;
-    if(btn.dataset.action==="fav") toggleFavourite(st);
-    if(btn.dataset.action==="play") playStored(st);
-  });
-
-  document.getElementById("surpriseStationBtn")?.addEventListener("click",function(){
-    /* Use the app's own Surprise Me button if present, otherwise choose a station option. */
-    const candidates=[...document.querySelectorAll("select option")].filter(o=>o.value);
-    const stationSelect =
-      document.getElementById("station") ||
-      document.getElementById("stationSelect") ||
-      document.querySelector('select[id*="station" i]');
-    if(stationSelect && stationSelect.options.length>1){
-      const valid=[...stationSelect.options].filter(o=>o.value);
-      if(valid.length){
-        const chosen=valid[Math.floor(Math.random()*valid.length)];
-        stationSelect.value=chosen.value;
-        stationSelect.dispatchEvent(new Event("change",{bubbles:true}));
-        return;
-      }
-    }
-    const own=document.querySelector('button[id*="surprise" i]:not(#surpriseStationBtn),button[class*="surprise" i]');
-    if(own) own.click();
-  });
-
-  document.getElementById("clearHistoryBtn")?.addEventListener("click",function(){
-    recent=[];
-    save(RECENT_KEY,recent);
-    renderRecent();
-    updatePassport();
-  });
-
-  document.querySelectorAll(".moodBtn").forEach(btn=>{
-    btn.addEventListener("click",function(){
-      const mood=this.dataset.mood || "";
-      const status=document.getElementById("moodStatus");
-      if(status) status.textContent = "Mood selected: " + mood + ". Choose a matching category above to continue.";
-      document.querySelectorAll(".moodBtn").forEach(x=>x.classList.remove("active"));
-      this.classList.add("active");
-
-      /* If the existing category selector contains the mood, select it. */
-      const selects=[...document.querySelectorAll("select")];
-      const category=selects.find(x=>/categor/i.test(x.id+" "+x.name+" "+x.getAttribute("aria-label")||""));
-      if(category){
-        const opt=[...category.options].find(o=>o.textContent.toLowerCase().includes(mood.toLowerCase()));
-        if(opt){
-          category.value=opt.value;
-          category.dispatchEvent(new Event("change",{bubbles:true}));
-        }
-      }
-    });
-  });
-
-  /* Capture playback events without replacing the Phase 4 audio logic. */
-  function attachAudio(){
-    const audio=getAudio();
-    if(!audio || audio.dataset.phase7Bound) return;
-    audio.dataset.phase7Bound="1";
-    audio.addEventListener("playing",()=>addRecent(currentStation()));
-  }
-
-  renderFavourites();
-  renderRecent();
-  updatePassport();
-  attachAudio();
-
-  /* Re-check because some Phase 4 implementations create the audio element dynamically. */
-  const observer=new MutationObserver(attachAudio);
-  observer.observe(document.body,{childList:true,subtree:true});
-
-  /* Also record a station when the application's controls change. */
-  document.addEventListener("change",function(e){
-    if(e.target.matches('select[id*="station" i],select[name*="station" i]')){
-      setTimeout(()=>{ addRecent(currentStation()); },250);
-    }
-  });
-})();
-</script>
-
-
 <!-- ===== PHASE 8 FOOTER ===== -->
 <footer class="wrFooter">
   <div><strong>WORLD RADIO</strong> — a worldwide radio discovery experience.</div>
@@ -1881,12 +1687,12 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
 
   const aboutBody=`
     <p><strong>World Radio</strong> is a browser-based worldwide radio discovery interface.</p>
-    <p>The application combines a classic analog-radio visual language with modern station discovery, live playback where a station provides a compatible stream, a world explorer, favourites and recently played stations.</p>
+    <p>The application combines a classic analog-radio visual language with modern station discovery, live playback where a station provides a compatible stream, and a world explorer.</p>
     <p>Station availability depends on the external radio directory and on the individual broadcaster's stream. A station may therefore be temporarily unavailable or may not work in every browser/network.</p>
   `;
   const privacyBody=`
-    <p>This application stores personal interface data such as favourites, recently played stations and appearance preference locally in your browser using local storage.</p>
-    <p>No account is required for these local features. Clearing the browser's site data can remove them.</p>
+    <p>This application stores appearance preference locally in your browser using local storage.</p>
+    <p>No account is required for this preference. Clearing the browser's site data can remove it.</p>
   `;
 
   document.getElementById("wrAboutBtn")?.addEventListener("click",()=>openModal("About World Radio",aboutBody));
@@ -1894,12 +1700,8 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
   document.getElementById("wrPrivacyBtn")?.addEventListener("click",()=>openModal("Privacy",privacyBody));
 
   document.getElementById("wrResetBtn")?.addEventListener("click",()=>{
-    if(!confirm("Reset World Radio local preferences, favourites and recent history?"))return;
-    [
-      "worldRadio_phase7_favourites_v1",
-      "worldRadio_phase7_recent_v1",
-      THEME_KEY
-    ].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+    if(!confirm("Reset World Radio appearance preference?"))return;
+    [THEME_KEY].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
     setTheme("dark");
     showToast("Local preferences have been reset.");
     setTimeout(()=>location.reload(),700);
