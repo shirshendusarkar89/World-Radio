@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Radio — Phase 6 • World Explorer</title>
+<title>World Radio — Expanded Worldwide Stations</title>
 <style>
 :root{
   --bg:#07131b;
@@ -75,7 +75,6 @@ select{
 select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 .helper{font-size:10px;color:#7894a0;margin-top:8px}
 .people{font-size:12px;color:#9db7c2;margin-left:4px}
-.controlsFooter{display:flex;gap:8px;margin-top:7px}
 .smallBtn{
  flex:1;padding:9px;border:1px solid #345966;background:#0a1a22;color:#a9c2cb;
  border-radius:10px;cursor:pointer;font-size:11px;letter-spacing:.5px
@@ -170,7 +169,6 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 @media(max-width:950px){
  .shell{grid-template-columns:1fr}
  .controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
- .sectionTitle,.controlsFooter{grid-column:1/-1}
  .selector{margin:0}
  .bezel{min-height:600px}
 }
@@ -279,7 +277,7 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
     margin-top:5px;
     line-height:1.25;
   }
-  .controlsFooter {
+  .removedControlsFooter {
     gap:7px;
     margin-top:3px;
   }
@@ -559,37 +557,6 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 }
 
 
-/* ===== PHASE 6: WORLD EXPLORER ===== */
-.explorer{
-  margin-top:18px;background:linear-gradient(145deg,#102a36,#081820);
-  border:1px solid #315665;border-radius:20px;box-shadow:0 18px 45px #0008,inset 0 1px #ffffff10;
-  overflow:hidden;
-}
-.explorerHead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;border-bottom:1px solid #ffffff12}
-.explorerTitle{font-size:12px;letter-spacing:2px;color:#cce5ec;font-weight:800}
-.explorerSub{font-size:9px;color:#71909b;letter-spacing:1px;margin-top:4px}
-.explorerBadge{font-size:9px;color:#ffbf80;border:1px solid #704b32;border-radius:999px;padding:6px 9px;letter-spacing:1px;white-space:nowrap}
-.explorerBody{display:grid;grid-template-columns:minmax(320px,1.25fr) minmax(280px,.75fr);gap:0;min-height:390px}
-.globeWrap{position:relative;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 50% 45%,#123b4a 0,#091e29 52%,#07131b 100%);border-right:1px solid #ffffff12}
-#worldCanvas{width:min(100%,620px);height:auto;aspect-ratio:1/1;display:block;filter:drop-shadow(0 10px 30px #000b)}
-.globeCaption{position:absolute;left:18px;bottom:15px;font:11px Georgia,serif;color:#88aab5;background:#07151ccc;border:1px solid #315665;border-radius:10px;padding:7px 10px;backdrop-filter:blur(5px)}
-.globeLegend{position:absolute;right:18px;bottom:15px;display:flex;gap:8px;align-items:center;font-size:8px;color:#76939e;letter-spacing:.8px}
-.legendDot{width:8px;height:8px;border-radius:50%;background:#ff7a2f;box-shadow:0 0 10px #ff7a2f}
-.explorerInfo{padding:18px;display:flex;flex-direction:column;gap:11px}
-.geoCard{border:1px solid #264b58;border-radius:13px;background:#091b23;padding:12px}
-.geoLabel{font-size:8px;letter-spacing:1.7px;color:#7898a4;margin-bottom:6px}
-.geoValue{font:18px Georgia,serif;color:#f0f6f8;overflow-wrap:anywhere}
-.geoValue.accent{color:#ffb36e}
-.geoGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.geoSmall{font-size:11px;color:#d1e2e7;line-height:1.45}
-.geoSmall strong{display:block;color:#6e909b;font-size:8px;letter-spacing:1.2px;margin-bottom:3px}
-.explorerMessage{margin-top:auto;border:1px solid #203f4b;border-radius:10px;background:#07171f;color:#87a5af;padding:9px;font-size:9px;line-height:1.4}
-.daylight{display:inline-flex;align-items:center;gap:6px;font-size:9px;color:#9ed8b8}
-.daylightDot{width:7px;height:7px;border-radius:50%;background:#ffd45d;box-shadow:0 0 9px #ffd45d}
-@media(max-width:950px){.explorerBody{grid-template-columns:1fr}.globeWrap{border-right:0;border-bottom:1px solid #ffffff12}.explorerInfo{display:grid;grid-template-columns:1fr 1fr}.explorerMessage{grid-column:1/-1}}
-@media(max-width:650px){.explorer{margin-top:10px;border-radius:16px}.explorerHead{padding:11px 12px}.explorerTitle{font-size:10px}.explorerSub{font-size:7px}.explorerBadge{font-size:7px;padding:5px 7px}.explorerBody{min-height:0}.globeWrap{padding:10px}.globeCaption{left:10px;bottom:9px;font-size:9px}.globeLegend{right:10px;bottom:9px;font-size:7px}.explorerInfo{padding:10px;gap:7px}.geoCard{padding:9px}.geoValue{font-size:15px}.geoSmall{font-size:10px}}
-
-
 /* =========================================================
    PHASE 8 — FINAL POLISH & DEPLOYMENT READY
    ========================================================= */
@@ -723,7 +690,7 @@ body.wrLight{
 
 <meta name="theme-color" content="#070a0e">
 <meta name="color-scheme" content="dark light">
-<meta name="description" content="World Radio — discover live radio stations from around the world.">
+<meta name="description" content="World Radio — discover live radio stations from around the world with live playback.">
 
 </head>
 <body>
@@ -734,9 +701,6 @@ body.wrLight{
 <section class="wrHero">
   <h1>World Radio</h1>
   <p>Explore live radio from around the world through a modern interface inspired by the soul of the classic radio receiver.</p>
-  <div class="wrBreadcrumb" id="wrBreadcrumb">
-    <span>🌐 Worldwide</span><span>🎙 Live Broadcasts</span><span>📻 Analog Spirit</span>
-  </div>
 </section>
 <main class="shell">
     <section class="controls">
@@ -800,11 +764,6 @@ body.wrLight{
         <span class="stepDot" id="step4">4</span><span>Station</span>
       </div>
       <div class="cascadeMessage" id="cascadeMessage">Choose a language to begin.</div>
-
-      <div class="controlsFooter">
-        <button class="smallBtn" id="resetBtn">↺ RESET</button>
-        <button class="smallBtn" id="surpriseBtn">✦ PREVIEW</button>
-      </div>
     </section>
 
     <section class="radio">
@@ -833,7 +792,7 @@ body.wrLight{
             <div class="consoleStatus" id="consoleStatus"><span class="tiny"></span><span id="consoleStatusText">STANDBY</span></div>
 
             <div class="spectrum" id="spectrum"></div>
-            <div class="phaseNote">WORLD EXPLORER • LIVE STATION GEOGRAPHY</div>
+            
           </div>
         </div>
 
@@ -843,7 +802,7 @@ body.wrLight{
           <label aria-label="Volume"><span style="font-size:9px;color:#8daab4">VOL</span> <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.85"></label>
           <button class="smallBtn" id="stopBtn" type="button" style="flex:none;padding:8px 12px" disabled>■ STOP</button>
         </div>
-        <div class="playerHint" id="playerHint">The yellow spectrum activates only during actual live playback. Audio-reactive mode is used when the browser permits analysis; otherwise a live CSS visualizer is used.</div>
+        <div class="playerHint" id="playerHint">Expanded worldwide station directory • Hindi, English and Bengali are not hard-coded; the application fetches currently available stations dynamically. The yellow spectrum activates only during actual live playback.</div>
         <audio class="audioEl" id="audio" preload="none" playsinline></audio>
 
         <div class="bottomInfo">
@@ -855,33 +814,7 @@ body.wrLight{
     </section>
   </main>
 
-  <section class="explorer" id="worldExplorer">
-    <div class="explorerHead">
-      <div>
-        <div class="explorerTitle">🌍 WORLD EXPLORER</div>
-        <div class="explorerSub">SEE WHERE YOUR RADIO SIGNAL COMES FROM</div>
-      </div>
-      <div class="explorerBadge">PHASE 6 • GEOGRAPHY</div>
-    </div>
-    <div class="explorerBody">
-      <div class="globeWrap">
-        <canvas id="worldCanvas" width="620" height="620" aria-label="Interactive station globe"></canvas>
-        <div class="globeCaption" id="globeCaption">Select a station to locate it on Earth.</div>
-        <div class="globeLegend"><span class="legendDot"></span> SELECTED STATION</div>
-      </div>
-      <div class="explorerInfo">
-        <div class="geoCard"><div class="geoLabel">RADIO ORIGIN</div><div class="geoValue accent" id="geoCountry">—</div></div>
-        <div class="geoCard"><div class="geoLabel">STATION CITY / AREA</div><div class="geoValue" id="geoCity">—</div></div>
-        <div class="geoGrid">
-          <div class="geoCard"><div class="geoSmall"><strong>LATITUDE</strong><span id="geoLat">—</span></div></div>
-          <div class="geoCard"><div class="geoSmall"><strong>LONGITUDE</strong><span id="geoLon">—</span></div></div>
-          <div class="geoCard"><div class="geoSmall"><strong>LOCAL SKY</strong><span class="daylight"><span class="daylightDot"></span><span id="geoDaylight">—</span></span></div></div>
-          <div class="geoCard"><div class="geoSmall"><strong>TIME ZONE</strong><span id="geoTime">UTC based</span></div></div>
-        </div>
-        <div class="explorerMessage" id="explorerMessage">Choose a station. The globe will automatically rotate toward its geographic coordinates. The map is a visual explorer; the stream itself remains controlled by the radio player above.</div>
-      </div>
-    </div>
-  </section>
+
 </div>
 
 <script>
@@ -894,7 +827,13 @@ const API_BASES = [
   'https://de1.api.radio-browser.info',
   'https://nl1.api.radio-browser.info'
 ];
-const API_LIMIT = 5000;
+const API_LIMIT = 30000;
+/* Expanded station retrieval:
+   - COUNTRY_DISCOVERY_LIMIT keeps the first cascade request lighter.
+   - STATION_POOL_LIMIT lets the selected country expose a much larger
+     live station pool instead of the old 5,000-record ceiling. */
+const COUNTRY_DISCOVERY_LIMIT = 30000;
+const STATION_POOL_LIMIT = 100000;
 const LEVELS = ['language','country','category','station'];
 const $ = id => document.getElementById(id);
 const language=$('language'), country=$('country'), category=$('category'), station=$('station');
@@ -1529,29 +1468,137 @@ function updateDisplay(){
 function hashCode(str){let h=0;for(let i=0;i<str.length;i++)h=((h<<5)-h)+str.charCodeAt(i)|0;return Math.abs(h)}
 
 async function initLanguages(){
-  setBusy('language',true);setMessage('Connecting to the worldwide radio directory and official-language register…');
+  setBusy('language',true);
+  fillSelect(language,[],'Loading languages…');
+  setLevelEnabled('language',false);
+  setMessage('Connecting to the worldwide radio directory…');
+
   try{
-    const [data,officialNames]=await Promise.all([
-      fetchJson('/json/languages',{order:'stationcount',reverse:'true',hidebroken:'true',limit:'2000'}),
-      fetchOfficialLanguageNames()
-    ]);
-    const langs=uniqueLanguages(data,officialNames);
-    if(!langs.length)throw new Error('No official-language radio entries returned');
-    fillSelect(language,langs,'Select language');setLevelEnabled('language',true);$('state-language').textContent='READY';
-    $('country-helper').textContent='Choose an official language first.';
-    setMessage(`Worldwide directory connected. ${langs.length} official-language entries are available.`,'success');
+    /* Radio Browser officially exposes /json/languages as the live language
+       directory. We use it as the primary source. */
+    let data=[];
+    let directoryError=null;
+
+    try{
+      data=await fetchJson('/json/languages',{
+        order:'stationcount',
+        reverse:'true',
+        hidebroken:'true',
+        limit:'100000'
+      });
+    }catch(e){
+      directoryError=e;
+    }
+
+    /*
+      CLDR is useful for identifying official languages, but it must never
+      make the radio application unusable if the external XML source is
+      temporarily unavailable or its format changes.
+    */
+    let officialNames=null;
+    try{
+      officialNames=await fetchOfficialLanguageNames();
+    }catch(_e){
+      officialNames=null;
+    }
+
+    let langs=[];
+
+    if(Array.isArray(data) && data.length){
+      if(officialNames && officialNames.size){
+        langs=uniqueLanguages(data,officialNames);
+      }
+
+      /*
+        Safety fallback:
+        If the official-language cross-check produces no result, use the
+        actual Radio Browser language directory. This guarantees that
+        languages such as English, Hindi and Bengali are not lost merely
+        because the external CLDR service is unavailable or changed.
+      */
+      if(!langs.length){
+        langs=[...new Set(
+          data
+            .filter(x=>x&&x.name&&Number(x.stationcount||0)>0)
+            .map(x=>String(x.name).trim())
+            .filter(Boolean)
+        )].sort((a,b)=>
+          a.localeCompare(b,undefined,{sensitivity:'base',numeric:false})
+        );
+      }
+    }
+
+    /*
+      Final emergency fallback: obtain a larger live station sample and
+      construct the language list directly from station.language fields.
+      This is still dynamic data; no fixed station/language list is stored
+      in the application.
+    */
+    if(!langs.length){
+      const stations=await fetchJson('/json/stations/search',{
+        hidebroken:'true',
+        order:'language',
+        limit:String(COUNTRY_DISCOVERY_LIMIT)
+      });
+
+      const languageSet=new Set();
+
+      (Array.isArray(stations)?stations:[]).forEach(s=>{
+        String(s.language||'')
+          .split(',')
+          .map(x=>x.trim())
+          .filter(Boolean)
+          .forEach(x=>languageSet.add(x));
+      });
+
+      langs=[...languageSet].sort((a,b)=>
+        a.localeCompare(b,undefined,{sensitivity:'base',numeric:false})
+      );
+    }
+
+    if(!langs.length){
+      throw directoryError||new Error('No languages returned by the live radio directory.');
+    }
+
+    /* STRICT LANGUAGE ORDER: A → Z. */
+    langs.sort((a,b)=>
+      a.localeCompare(b,undefined,{sensitivity:'base',numeric:false})
+    );
+
+    fillSelect(language,langs,'Select language');
+    setLevelEnabled('language',true);
+    $('state-language').textContent='READY';
+    $('country-helper').textContent='Choose a language first.';
+
+    const sourceNote=officialNames&&officialNames.size
+      ? 'official-language cross-check available'
+      : 'live directory mode';
+
+    setMessage(
+      `Worldwide directory connected. ${langs.length} languages available • ${sourceNote}.`,
+      'success'
+    );
+
   }catch(e){
+    fillSelect(language,[],'Unable to load languages');
     setLevelEnabled('language',false);
-    setMessage('The official-language register or worldwide radio directory could not be reached. Please use Reload / try again.','error');
-    $('country-helper').textContent='Waiting for the official-language register and worldwide directory.';
-  }finally{setBusy('language',false);updateStatus();updateDisplay()}
+    setMessage(
+      'The worldwide radio language directory could not be reached. Please use Reload / try again.',
+      'error'
+    );
+    $('country-helper').textContent='Waiting for the worldwide radio directory.';
+  }finally{
+    setBusy('language',false);
+    updateStatus();
+    updateDisplay();
+  }
 }
 async function loadCountries(){
   const serial=++requestSerial; clearBelow('language'); state.country='';state.category='';state.station='';currentStations=[];
   if(!state.language){updateStatus();updateDisplay();setMessage('Choose a language to begin.');return;}
   setLevelEnabled('country',false);setBusy('country',true);setMessage(`Finding countries with ${state.language} radio stations…`);
   try{
-    const stations=await fetchJson('/json/stations/search',{language:state.language,hidebroken:'true',order:'country',limit:String(API_LIMIT)});
+    const stations=await fetchJson('/json/stations/search',{language:state.language,hidebroken:'true',order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)});
     if(serial!==requestSerial)return;
     const countries=uniqueCountries(stations);
     if(!countries.length)throw new Error('No countries found');
@@ -1566,12 +1613,20 @@ async function loadCategories(){
   if(!state.country){updateStatus();updateDisplay();return}
   setLevelEnabled('category',false);setBusy('category',true);setMessage(`Finding radio categories in ${state.country} for ${state.language}…`);
   try{
-    currentStations=await fetchJson('/json/stations/search',{language:state.language,countryExact:'true',country:state.country,hidebroken:'true',order:'name',limit:String(API_LIMIT)});
+    currentStations=await fetchJson('/json/stations/search',{
+      language:state.language,
+      countryExact:'true',
+      country:state.country,
+      hidebroken:'true',
+      order:'votes',
+      reverse:'true',
+      limit:String(STATION_POOL_LIMIT)
+    });
     if(serial!==requestSerial)return;
     const cats=categoriesFromStations(currentStations);
     if(!cats.length)throw new Error('No recognizable categories');
     fillSelect(category,cats.map(x=>({value:x,label:`${categoryIcons[x]||'📻'} ${x}`})),'Select category');setLevelEnabled('category',true);
-    $('category-helper').textContent=`${cats.length} categories found from station tags.`;$('state-category').textContent='READY';
+    $('category-helper').textContent=`${cats.length} categories found from an expanded live station pool.`;$('state-category').textContent='READY';
     setMessage(`Country: ${state.country}. Choose a category or use ◀ / ▶.`,'success');
   }catch(e){clearLevel('category');setMessage(`No category data could be derived for ${state.country}.`,'error')}
   finally{setBusy('category',false);updateStatus();updateDisplay()}
@@ -1580,10 +1635,14 @@ function loadStations(){
   clearBelow('category');state.station='';
   if(!state.category){updateStatus();updateDisplay();return}
   const filtered=currentStations.filter(s=>matchesCategory(s,state.category)&&s.stationuuid);
-  filtered.sort((a,b)=>(b.votes||0)-(a.votes||0)||String(a.name||'').localeCompare(String(b.name||'')));
+  filtered.sort((a,b)=>
+    (Number(b.lastcheckok||0)-Number(a.lastcheckok||0)) ||
+    (Number(b.votes||0)-Number(a.votes||0)) ||
+    String(a.name||'').localeCompare(String(b.name||'')
+  ));
   const options=filtered.map(s=>({value:s.stationuuid,label:stationLabel(s)}));
   fillSelect(station,options,'Select station');setLevelEnabled('station',options.length>0);
-  $('station-helper').textContent=options.length?`${options.length} matching stations found.`:'No stations match this category.';$('state-station').textContent=options.length?'READY':'NO DATA';
+  $('station-helper').textContent=options.length?`${options.length} matching stations found from the expanded live directory.`:'No stations match this category.';$('state-station').textContent=options.length?'READY':'NO DATA';
   setMessage(options.length?`Category: ${state.category}. Choose a station or use ◀ / ▶.`:`No station data is available for ${state.category}.`,'info');
   updateStatus();updateDisplay();
 }
@@ -1605,12 +1664,6 @@ country.addEventListener('change',()=>selectValue('country',country.value));
 category.addEventListener('change',()=>selectValue('category',category.value));
 station.addEventListener('change',()=>selectValue('station',station.value));
 LEVELS.forEach(l=>{$('prev-'+l).addEventListener('click',()=>navigate(l,-1));$('next-'+l).addEventListener('click',()=>navigate(l,1));});
-$('resetBtn').addEventListener('click',()=>{resetPlayer();requestSerial++;state.language=state.country=state.category=state.station='';currentStations=[];clearBelow('language');fillSelect(language,[],'Loading languages…');setLevelEnabled('language',false);updateStatus();updateDisplay();initLanguages()});
-$('surpriseBtn').addEventListener('click',async()=>{
-  if(!language.options.length||language.disabled){await initLanguages();}
-  if(language.options.length<=1)return;
-  const li=1+Math.floor(Math.random()*(language.options.length-1));selectValue('language',language.options[li].value);
-});
 
 /* Phase 3: spectrum animation is enabled only while the audio element is actually playing. */
 const spectrum=$('spectrum');
@@ -1727,133 +1780,6 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
 
 
 
-/* ===== PHASE 6: WORLD EXPLORER ENGINE ===== */
-(function(){
-  const canvas=document.getElementById('worldCanvas');
-  if(!canvas) return;
-  const ctx=canvas.getContext('2d');
-  const geoCountry=document.getElementById('geoCountry');
-  const geoCity=document.getElementById('geoCity');
-  const geoLat=document.getElementById('geoLat');
-  const geoLon=document.getElementById('geoLon');
-  const geoDaylight=document.getElementById('geoDaylight');
-  const geoTime=document.getElementById('geoTime');
-  const globeCaption=document.getElementById('globeCaption');
-  const explorerMessage=document.getElementById('explorerMessage');
-  let targetLat=null,targetLon=null;
-  let viewLon=0, viewLat=8;
-  let animating=false;
-  let pulse=0;
-
-  function resizeCanvas(){
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    const r=canvas.getBoundingClientRect();
-    canvas.width=Math.max(1,Math.round(r.width*dpr)); canvas.height=Math.max(1,Math.round(r.height*dpr));
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-  }
-  function dims(){const r=canvas.getBoundingClientRect();return {w:r.width,h:r.height,r:Math.min(r.width,r.height)*.40,cx:r.width/2,cy:r.height/2+2}}
-  function rad(x){return x*Math.PI/180}
-  function project(lat,lon,d){
-    let dl=rad(lon-d.lon), la=rad(lat);
-    let x=Math.cos(la)*Math.sin(dl);
-    let y=Math.sin(la)*Math.cos(rad(d.lat))-Math.cos(la)*Math.cos(dl)*Math.sin(rad(d.lat));
-    let z=Math.sin(la)*Math.sin(rad(d.lat))+Math.cos(la)*Math.cos(dl)*Math.cos(rad(d.lat));
-    if(z<-.02) return null;
-    return {x:d.cx+d.r*x,y:d.cy-d.r*y,z:z};
-  }
-  function drawGraticule(d){
-    ctx.save();ctx.lineWidth=0.7;ctx.strokeStyle='rgba(118,190,210,.18)';
-    for(let lat=-60;lat<=60;lat+=30){
-      ctx.beginPath();let started=false;
-      for(let lon=-180;lon<=180;lon+=3){let p=project(lat,lon,d);if(p){if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y)}}ctx.stroke();
-    }
-    for(let lon=-150;lon<=180;lon+=30){
-      ctx.beginPath();let started=false;
-      for(let lat=-90;lat<=90;lat+=3){let p=project(lat,lon,d);if(p){if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y)}}ctx.stroke();
-    }
-    ctx.restore();
-  }
-  function drawLandHint(d){
-    // Stylized continent silhouettes: intentionally schematic, not a political/border map.
-    const shapes=[
-      [[-55,-75],[-20,-80],[10,-70],[55,-60],[70,-45],[55,-30],[25,-35],[5,-50],[-20,-55]],
-      [[15,-168],[45,-145],[58,-125],[50,-105],[30,-95],[15,-100],[5,-120]],
-      [[55,-80],[72,-65],[78,-35],[62,-15],[45,-20],[35,-45],[30,-70]],
-      [[72,0],[62,20],[55,35],[42,30],[35,10],[20,0],[5,10],[-5,30],[-20,25],[-35,10],[-30,-10],[-10,-20],[10,-10],[30,-5],[45,-10],[55,-5]],
-      [[20,65],[35,75],[45,95],[35,120],[20,135],[5,125],[0,105],[10,85]],
-      [[-10,105],[5,120],[0,145],[-15,155],[-30,145],[-40,120],[-30,105]],
-      [[-5,-180],[20,-165],[10,-150],[-10,-145],[-25,-155],[-20,-175]]
-    ];
-    ctx.save();
-    shapes.forEach(shape=>{
-      ctx.beginPath();let first=true;
-      for(const pt of shape){const p=project(pt[0],pt[1],d);if(p){if(first){ctx.moveTo(p.x,p.y);first=false}else ctx.lineTo(p.x,p.y)}}
-      if(!first){ctx.closePath();ctx.fillStyle='rgba(92,150,125,.22)';ctx.fill();ctx.strokeStyle='rgba(116,190,160,.22)';ctx.lineWidth=.8;ctx.stroke()}
-    });ctx.restore();
-  }
-  function drawSunNight(d){
-    const now=new Date();
-    const utcH=now.getUTCHours()+now.getUTCMinutes()/60;
-    const sunLon=180-utcH*15;
-    const p=project(0,sunLon,d);
-    if(p){ctx.save();ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fillStyle='#ffd45d';ctx.shadowBlur=15;ctx.shadowColor='#ffd45d';ctx.fill();ctx.restore()}
-  }
-  function drawMarker(d){
-    if(targetLat===null||targetLon===null)return;
-    const p=project(targetLat,targetLon,d);if(!p)return;
-    const q=12+Math.sin(pulse)*3;
-    ctx.save();ctx.beginPath();ctx.arc(p.x,p.y,q,0,Math.PI*2);ctx.strokeStyle='rgba(255,122,47,.28)';ctx.lineWidth=2;ctx.stroke();
-    ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fillStyle='#ff7a2f';ctx.shadowBlur=18;ctx.shadowColor='#ff7a2f';ctx.fill();
-    ctx.beginPath();ctx.moveTo(p.x,p.y-8);ctx.lineTo(p.x,p.y-25);ctx.strokeStyle='#ffb36e';ctx.lineWidth=1;ctx.stroke();
-    ctx.font='10px Inter,Arial';ctx.fillStyle='#ffd2a9';ctx.fillText('RADIO',p.x+7,p.y-27);ctx.restore();
-  }
-  function draw(){
-    const {w,h,r,cx,cy}=dims();
-    ctx.clearRect(0,0,w,h);
-    const g=ctx.createRadialGradient(cx-r*.25,cy-r*.3,r*.08,cx,cy,r*1.25);g.addColorStop(0,'#15475a');g.addColorStop(.7,'#0a2633');g.addColorStop(1,'#06151e');
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-    ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
-    drawLandHint({cx,cy,r,lat:viewLat,lon:viewLon});drawGraticule({cx,cy,r,lat:viewLat,lon:viewLon});drawSunNight({cx,cy,r,lat:viewLat,lon:viewLon});drawMarker({cx,cy,r,lat:viewLat,lon:viewLon});ctx.restore();
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(170,225,238,.45)';ctx.lineWidth=1.2;ctx.stroke();
-    // rim glow
-    ctx.beginPath();ctx.arc(cx,cy,r+5,0,Math.PI*2);ctx.strokeStyle='rgba(84,217,255,.12)';ctx.lineWidth=3;ctx.stroke();
-    pulse+=.055;
-  }
-  function animate(){
-    if(animating){
-      let d=((viewLon-targetLon+540)%360)-180;
-      let ld=targetLat-viewLat;
-      if(Math.abs(d)<.15 && Math.abs(ld)<.1){viewLon=targetLon;viewLat=targetLat;animating=false}else{viewLon+=d*.08;viewLat+=ld*.08}
-    }
-    draw();requestAnimationFrame(animate);
-  }
-  function fmtCoord(v,pos,neg){return Math.abs(v).toFixed(3)+'° '+(v>=0?pos:neg)}
-  function updateDaylight(lat,lon){
-    const utc=new Date();const utcHour=utc.getUTCHours()+utc.getUTCMinutes()/60;const localSolar=((utcHour+lon/15)%24+24)%24;const daylight=localSolar>=6&&localSolar<18;geoDaylight.textContent=daylight?'DAYLIGHT':'NIGHT';geoDaylight.parentElement.parentElement.querySelector('.daylightDot').style.background=daylight?'#ffd45d':'#89bfff';geoDaylight.parentElement.parentElement.querySelector('.daylightDot').style.boxShadow=daylight?'0 0 9px #ffd45d':'0 0 9px #89bfff';geoTime.textContent='Solar '+String(Math.floor(localSolar)).padStart(2,'0')+':'+String(Math.floor((localSolar%1)*60)).padStart(2,'0')}
-  function locateStation(){
-    try{
-      if(typeof stationObject!=='function')return;
-      const s=stationObject();
-      if(!s)return;
-      const lat=parseFloat(s.geo_lat),lon=parseFloat(s.geo_long);
-      if(!Number.isFinite(lat)||!Number.isFinite(lon)){
-        geoCountry.textContent=s.country||'—';geoCity.textContent=s.state||s.name||'—';geoLat.textContent='Not supplied';geoLon.textContent='Not supplied';geoDaylight.textContent='—';geoTime.textContent='UTC based';globeCaption.textContent='This station does not publish geographic coordinates.';explorerMessage.textContent='The station directory did not provide coordinates for this station, so the globe cannot place an exact marker. Radio playback is unaffected.';return;
-      }
-      targetLat=Math.max(-90,Math.min(90,lat));targetLon=((lon+180)%360+360)%360-180;animating=true;
-      geoCountry.textContent=(s.countrycode?countryFlag(s.countrycode)+' ':'')+(s.country||'Unknown country');
-      geoCity.textContent=s.state||s.name||'Unknown area';
-      geoLat.textContent=fmtCoord(targetLat,'N','S');geoLon.textContent=fmtCoord(targetLon,'E','W');
-      updateDaylight(targetLat,targetLon);
-      globeCaption.textContent='Globe centered on '+(s.country||'the selected station');
-      explorerMessage.textContent='The marker represents the station coordinates published by the radio directory. The continent shapes are intentionally schematic; they are for orientation, not detailed cartography.';
-    }catch(e){console.warn('World Explorer:',e)}
-  }
-  window.worldExplorerLocate=locateStation;
-  window.addEventListener('resize',resizeCanvas);resizeCanvas();animate();
-  // Poll lightly because Phase 4/5 selection functions are already established and are not refactored here.
-  let last='';setInterval(()=>{const s=typeof stationObject==='function'?stationObject():null;const id=s&&s.stationuuid||'';if(id!==last){last=id;locateStation()}},350);
-})();
-
 </script>
 
 <!-- ===== PHASE 8 FOOTER ===== -->
@@ -1923,7 +1849,7 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
 
   const aboutBody=`
     <p><strong>World Radio</strong> is a browser-based worldwide radio discovery interface.</p>
-    <p>The application combines a classic analog-radio visual language with modern station discovery, live playback where a station provides a compatible stream, and a world explorer.</p>
+    <p>The application combines a classic analog-radio visual language with modern station discovery, live playback where a station provides a compatible stream,.</p>
     <p>Station availability depends on the external radio directory and on the individual broadcaster's stream. A station may therefore be temporarily unavailable or may not work in every browser/network.</p>
   `;
   const privacyBody=`
