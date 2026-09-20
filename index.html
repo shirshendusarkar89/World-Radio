@@ -186,6 +186,113 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 }
 
 
+
+/* ===== PRE-CONFIGURED CHANNELS PANEL ===== */
+.preconfig{
+  margin-top:10px;
+  border:1px solid #294d5b;
+  border-radius:13px;
+  background:linear-gradient(160deg,#0c2029,#08171e);
+  box-shadow:inset 0 1px #ffffff08;
+  overflow:hidden;
+}
+.preconfig>summary{
+  list-style:none;
+  cursor:pointer;
+  min-height:40px;
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#d7edf2;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  user-select:none;
+}
+.preconfig>summary::-webkit-details-marker{display:none}
+.preconfig>summary:after{
+  content:'›';
+  color:#78a5b3;
+  font-size:20px;
+  line-height:1;
+  transform:rotate(0deg);
+  transition:transform .18s ease;
+}
+.preconfig[open]>summary:after{transform:rotate(90deg);color:var(--cyan)}
+.preconfigBody{
+  padding:2px 12px 13px;
+  border-top:1px solid #ffffff0d;
+}
+.preconfigLanguages{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  padding:10px 0 12px;
+}
+.preconfigLang{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  min-width:0;
+  padding:7px 8px;
+  border:1px solid transparent;
+  border-radius:9px;
+  color:#c9dde4;
+  font-size:10px;
+  cursor:pointer;
+}
+.preconfigLang:hover{background:#102b36;border-color:#294f5e}
+.preconfigLang input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.preconfigRadio{
+  width:17px;height:17px;min-width:17px;border-radius:50%;
+  border:2px solid #427486;
+  background:#0b1b23;
+  box-shadow:inset 0 0 0 3px #0b1b23;
+}
+.preconfigLang input:checked + .preconfigRadio{
+  border-color:#54d9ff;
+  background:#2b9ac2;
+  box-shadow:inset 0 0 0 3px #0b1b23,0 0 9px #54d9ff35;
+}
+.preconfigLangName{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.preconfigSelectors{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.preconfigField.stationField{grid-column:1 / -1}
+.preconfigField{min-width:0}
+.preconfigFieldLabel{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:0 2px 5px;
+  color:#7899a6;font-size:8px;letter-spacing:1.4px;
+}
+.preconfigNav{
+  display:grid;grid-template-columns:34px minmax(0,1fr) 34px;gap:5px;align-items:center;
+}
+.preconfigNav .navbtn{height:34px;font-size:19px}
+.preconfigNav select{height:34px;font-size:11px;padding:0 7px}
+.preconfigHint{
+  min-height:18px;margin-top:7px;color:#637f8b;font-size:8px;line-height:1.3;
+}
+@media(max-width:700px){
+  .preconfigLanguages{grid-template-columns:1fr 1fr;gap:5px}
+  .preconfigSelectors{grid-template-columns:1fr}
+  .preconfigBody{padding-left:9px;padding-right:9px}
+  .preconfigLang{padding:7px 6px}
+}
+
 /* ===== Phase 2 cascade status ===== */
 .cascadeStatus{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 2px 4px;color:#7f9ba6;font-size:8px;letter-spacing:.5px}
 .stepDot{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;border:1px solid #365966;background:#0a1a22;color:#78939e;font-size:9px}
@@ -1080,6 +1187,65 @@ body.wrLight{
           <div class="playerStatus" id="playerStatus">Select a station to prepare the live stream.</div>
           <label class="volumeWrap" aria-label="Volume"><span style="font-size:9px;color:#8daab4">VOL</span> <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.85"><span class="volumeValue" id="volumeValue">85%</span></label>
         </div>
+
+        <details class="preconfig" id="preConfiguredChannels">
+          <summary>Pre-Configured Channels</summary>
+          <div class="preconfigBody">
+            <div class="preconfigLanguages" role="radiogroup" aria-label="Pre-configured languages">
+              <label class="preconfigLang">
+                <span class="preconfigLangName">Bengali</span>
+                <input type="radio" name="preconfigLanguage" value="Bengali">
+                <span class="preconfigRadio" aria-hidden="true"></span>
+              </label>
+              <label class="preconfigLang">
+                <span class="preconfigLangName">Hindi</span>
+                <input type="radio" name="preconfigLanguage" value="Hindi">
+                <span class="preconfigRadio" aria-hidden="true"></span>
+              </label>
+              <label class="preconfigLang">
+                <span class="preconfigLangName">English</span>
+                <input type="radio" name="preconfigLanguage" value="English">
+                <span class="preconfigRadio" aria-hidden="true"></span>
+              </label>
+              <label class="preconfigLang">
+                <span class="preconfigLangName">Asamese</span>
+                <input type="radio" name="preconfigLanguage" value="Assamese">
+                <span class="preconfigRadio" aria-hidden="true"></span>
+              </label>
+            </div>
+
+            <div class="preconfigSelectors">
+              <div class="preconfigField">
+                <div class="preconfigFieldLabel"><span>COUNTRY</span><span id="preconfigCountryState">WAITING</span></div>
+                <div class="preconfigNav">
+                  <button class="navbtn" id="preconfigPrevCountry" type="button" aria-label="Previous pre-configured country" disabled>‹</button>
+                  <select id="preconfigCountry" disabled aria-label="Pre-configured country"><option value="">Select country</option></select>
+                  <button class="navbtn" id="preconfigNextCountry" type="button" aria-label="Next pre-configured country" disabled>›</button>
+                </div>
+              </div>
+
+              <div class="preconfigField">
+                <div class="preconfigFieldLabel"><span>CATEGORY</span><span id="preconfigCategoryState">WAITING</span></div>
+                <div class="preconfigNav">
+                  <button class="navbtn" id="preconfigPrevCategory" type="button" aria-label="Previous pre-configured category" disabled>‹</button>
+                  <select id="preconfigCategory" disabled aria-label="Pre-configured category"><option value="">Select category</option></select>
+                  <button class="navbtn" id="preconfigNextCategory" type="button" aria-label="Next pre-configured category" disabled>›</button>
+                </div>
+              </div>
+
+              <div class="preconfigField stationField">
+                <div class="preconfigFieldLabel"><span>STATION</span><span id="preconfigStationState">WAITING</span></div>
+                <div class="preconfigNav">
+                  <button class="navbtn" id="preconfigPrevStation" type="button" aria-label="Previous pre-configured station" disabled>‹</button>
+                  <select id="preconfigStation" disabled aria-label="Pre-configured station"><option value="">Select station</option></select>
+                  <button class="navbtn" id="preconfigNextStation" type="button" aria-label="Next pre-configured station" disabled>›</button>
+                </div>
+              </div>
+            </div>
+            <div class="preconfigHint" id="preconfigHint">Choose a pre-configured language, then select any available country, category and station.</div>
+          </div>
+        </details>
+
         <div class="playerHint" id="playerHint">Expanded worldwide station directory • Hindi, English and Bengali are not hard-coded; the application fetches currently available stations dynamically. The live spectrum activates only during actual live playback.</div>
         <audio class="audioEl" id="audio" preload="none" playsinline></audio>
 
@@ -1115,6 +1281,8 @@ const STATION_POOL_LIMIT = 100000;
 const LEVELS = ['language','country','category','station'];
 const $ = id => document.getElementById(id);
 const language=$('language'), country=$('country'), category=$('category'), station=$('station');
+const preconfigCountry=$('preconfigCountry'), preconfigCategory=$('preconfigCategory'), preconfigStation=$('preconfigStation');
+const preconfigLanguageInputs=[...document.querySelectorAll('input[name="preconfigLanguage"]')];
 const state={language:'',country:'',category:'',station:''};
 const cache=new Map();
 let activeBase=null;
@@ -1183,6 +1351,48 @@ function fillSelect(select,items,placeholder){
   select.innerHTML='';
   const p=document.createElement('option');p.value='';p.textContent=placeholder;select.appendChild(p);
   items.forEach(item=>{const o=document.createElement('option');o.value=item.value??item;o.textContent=item.label??item;select.appendChild(o)});
+}
+
+function copySelectToPreConfig(source,target,placeholder){
+  if(!source||!target)return;
+  target.innerHTML='';
+  const p=document.createElement('option');p.value='';p.textContent=placeholder;target.appendChild(p);
+  [...source.options].slice(1).forEach(o=>{
+    const n=document.createElement('option');n.value=o.value;n.textContent=o.textContent;target.appendChild(n);
+  });
+  target.value=source.value||'';
+}
+function syncPreConfigPanel(){
+  const current=canonicalLanguageName(state.language);
+  preconfigLanguageInputs.forEach(input=>{
+    input.checked=!!current && canonicalLanguageName(input.value)===current;
+  });
+  if(preconfigCountry){
+    copySelectToPreConfig(country,preconfigCountry,'Select country');
+    preconfigCountry.disabled=country.disabled;
+    $('preconfigPrevCountry').disabled=country.disabled;
+    $('preconfigNextCountry').disabled=country.disabled;
+    $('preconfigCountryState').textContent=country.disabled?'WAITING':'READY';
+  }
+  if(preconfigCategory){
+    copySelectToPreConfig(category,preconfigCategory,'Select category');
+    preconfigCategory.disabled=category.disabled;
+    $('preconfigPrevCategory').disabled=category.disabled;
+    $('preconfigNextCategory').disabled=category.disabled;
+    $('preconfigCategoryState').textContent=category.disabled?'WAITING':'READY';
+  }
+  if(preconfigStation){
+    copySelectToPreConfig(station,preconfigStation,'Select station');
+    preconfigStation.disabled=station.disabled;
+    $('preconfigPrevStation').disabled=station.disabled;
+    $('preconfigNextStation').disabled=station.disabled;
+    $('preconfigStationState').textContent=station.disabled?'WAITING':'READY';
+  }
+  if($('preconfigHint')){
+    $('preconfigHint').textContent=state.language
+      ? `Language: ${state.language}. Country, category and station remain open for your selection.`
+      : 'Choose a pre-configured language, then select any available country, category and station.';
+  }
 }
 function setLevelEnabled(level,enabled){
   const sel=$(level),box=$('box-'+level);sel.disabled=!enabled;
@@ -1259,7 +1469,9 @@ const LANGUAGE_NAME_ALIASES = new Map([
   ['macedonian','macedonian'],
   ['portuguese brazilian','portuguese'],
   ['english uk','english'],
-  ['english us','english']
+  ['english us','english'],
+  ['bangla','bengali'],
+  ['bengali','bengali']
 ]);
 
 function normalizeLanguageName(s){
@@ -1310,6 +1522,33 @@ function uniqueLanguages(data,officialNames){
     a.localeCompare(b, undefined, {sensitivity:'base', numeric:false})
   );
 }
+function isBengaliLanguage(language){
+  return canonicalLanguageName(language)==='bengali';
+}
+
+function mergeStationLists(...lists){
+  const map=new Map();
+  lists.flat().forEach(s=>{
+    if(s&&s.stationuuid) map.set(s.stationuuid,s);
+  });
+  return [...map.values()];
+}
+
+async function fetchBengaliStations(extra={}){
+  /* Bengali is intentionally worldwide: combine language and tag searches,
+     then de-duplicate by Radio Browser station UUID. */
+  const searches=[
+    {language:'bengali'},
+    {language:'bangla'},
+    {tag:'bengali'},
+    {tag:'bangla'}
+  ];
+  const results=await Promise.allSettled(searches.map(q=>fetchJson('/json/stations/search',{
+    ...q, ...extra, hidebroken:'true', limit:String(STATION_POOL_LIMIT)
+  })));
+  return mergeStationLists(...results.filter(r=>r.status==='fulfilled').map(r=>r.value));
+}
+
 function stationLabel(s){
   const city=s.state?` • ${s.state}`:'';
   const quality=s.codec?(s.bitrate?` • ${s.codec} ${s.bitrate}k`: ` • ${s.codec}`):'';
@@ -1838,6 +2077,23 @@ async function initLanguages(){
       throw directoryError||new Error('No languages returned by the live radio directory.');
     }
 
+    /*
+      Display normalization only: Radio Browser may currently publish the
+      Bengali language as "Bangla". The UI presents one canonical name,
+      "Bengali", while the search engine below handles both forms.
+    */
+    const hasBengaliEntry=langs.some(x=>{
+      const n=normalizeLanguageName(x);
+      return n==='bangla'||n==='bengali';
+    });
+    if(hasBengaliEntry){
+      langs=langs.filter(x=>{
+        const n=normalizeLanguageName(x);
+        return n!=='bangla'&&n!=='bengali';
+      });
+      langs.push('Bengali');
+    }
+
     /* STRICT LANGUAGE ORDER: A → Z. */
     langs.sort((a,b)=>
       a.localeCompare(b,undefined,{sensitivity:'base',numeric:false})
@@ -1876,11 +2132,14 @@ async function loadCountries(){
   if(!state.language){updateStatus();updateDisplay();setMessage('Choose a language to begin.');return;}
   setLevelEnabled('country',false);setBusy('country',true);setMessage(`Finding countries with ${state.language} radio stations…`);
   try{
-    const stations=await fetchJson('/json/stations/search',{language:state.language,hidebroken:'true',order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)});
+    const stations=isBengaliLanguage(state.language)
+      ? await fetchBengaliStations({order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)})
+      : await fetchJson('/json/stations/search',{language:state.language,hidebroken:'true',order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)});
     if(serial!==requestSerial)return;
     const countries=uniqueCountries(stations);
     if(!countries.length)throw new Error('No countries found');
     fillSelect(country,countries,'Select country');setLevelEnabled('country',true);
+    syncPreConfigPanel();
     $('country-helper').textContent=`${countries.length} countries found in the live directory.`;$('state-country').textContent='READY';
     setMessage(`Language: ${state.language}. Select a country or use ◀ / ▶.`,'success');
   }catch(e){clearLevel('country');setMessage(`No country data could be loaded for ${state.language}.`,'error')}
@@ -1891,19 +2150,22 @@ async function loadCategories(){
   if(!state.country){updateStatus();updateDisplay();return}
   setLevelEnabled('category',false);setBusy('category',true);setMessage(`Finding radio categories in ${state.country} for ${state.language}…`);
   try{
-    currentStations=await fetchJson('/json/stations/search',{
-      language:state.language,
-      countryExact:'true',
-      country:state.country,
-      hidebroken:'true',
-      order:'votes',
-      reverse:'true',
-      limit:String(STATION_POOL_LIMIT)
-    });
+    currentStations=isBengaliLanguage(state.language)
+      ? await fetchBengaliStations({countryExact:'true',country:state.country,order:'votes',reverse:'true'})
+      : await fetchJson('/json/stations/search',{
+        language:state.language,
+        countryExact:'true',
+        country:state.country,
+        hidebroken:'true',
+        order:'votes',
+        reverse:'true',
+        limit:String(STATION_POOL_LIMIT)
+      });
     if(serial!==requestSerial)return;
     const cats=categoriesFromStations(currentStations);
     if(!cats.length)throw new Error('No recognizable categories');
     fillSelect(category,cats.map(x=>({value:x,label:`${categoryIcons[x]||'📻'} ${x}`})),'Select category');setLevelEnabled('category',true);
+    syncPreConfigPanel();
     $('category-helper').textContent=`${cats.length} categories found from an expanded live station pool.`;$('state-category').textContent='READY';
     setMessage(`Country: ${state.country}. Choose a category or use ◀ / ▶.`,'success');
   }catch(e){clearLevel('category');setMessage(`No category data could be derived for ${state.country}.`,'error')}
@@ -1928,6 +2190,7 @@ function selectValue(level,value){
   const sel=$(level);if(sel.disabled&&level!=='language')return;
   const opt=[...sel.options].find(o=>o.value===value);if(!opt)return;
   state[level]=value;sel.value=value;
+  syncPreConfigPanel();
   if(level==='language')loadCountries();
   else if(level==='country')loadCategories();
   else if(level==='category')loadStations();
@@ -1943,6 +2206,31 @@ category.addEventListener('change',()=>selectValue('category',category.value));
 station.addEventListener('change',()=>selectValue('station',station.value));
 LEVELS.forEach(l=>{$('prev-'+l).addEventListener('click',()=>navigate(l,-1));$('next-'+l).addEventListener('click',()=>navigate(l,1));});
 
+preconfigLanguageInputs.forEach(input=>{
+  input.addEventListener('change',()=>{
+    if(!input.checked)return;
+    const target=[...language.options].find(o=>canonicalLanguageName(o.value)===canonicalLanguageName(input.value));
+    if(target){
+      selectValue('language',target.value);
+    }else{
+      /* The preset keeps its user-facing spelling while using the canonical
+         Radio Browser spelling for a language such as Asamese/Assamese. */
+      state.language=input.value;
+      loadCountries();
+      syncPreConfigPanel();
+    }
+  });
+});
+preconfigCountry.addEventListener('change',()=>selectValue('country',preconfigCountry.value));
+preconfigCategory.addEventListener('change',()=>selectValue('category',preconfigCategory.value));
+preconfigStation.addEventListener('change',()=>selectValue('station',preconfigStation.value));
+$('preconfigPrevCountry').addEventListener('click',()=>navigate('country',-1));
+$('preconfigNextCountry').addEventListener('click',()=>navigate('country',1));
+$('preconfigPrevCategory').addEventListener('click',()=>navigate('category',-1));
+$('preconfigNextCategory').addEventListener('click',()=>navigate('category',1));
+$('preconfigPrevStation').addEventListener('click',()=>navigate('station',-1));
+$('preconfigNextStation').addEventListener('click',()=>navigate('station',1));
+
 /* Phase 3: spectrum animation is enabled only while the audio element is actually playing. */
 const spectrum=$('spectrum');
 [32,64,42,82,55,98,48,72,36,90,61,105,47,78,57,94,41,67,89,50,76,45,101,58,84,39,71,93,52,66,44,87].forEach((h,i)=>{
@@ -1953,7 +2241,7 @@ const spectrum=$('spectrum');
   b.style.setProperty('--d',(0.45+(i%7)*0.09)+'s');
   spectrum.appendChild(b);
 });
-fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);updateStatus();updateDisplay();initLanguages();
+fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);syncPreConfigPanel();updateStatus();updateDisplay();initLanguages();
 
 
 /* ===== PHASE 5 JavaScript ===== */
