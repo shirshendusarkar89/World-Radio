@@ -126,12 +126,12 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 }
 .pointer:before{
  content:"";position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);
- border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:20px solid #ff68c9;
- filter:drop-shadow(0 0 5px #ff68c9)
+ border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:20px solid #62f2a2;
+ filter:drop-shadow(0 0 7px #39f58a)
 }
 .pointer:after{
  content:"";position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);
- width:10px;height:10px;border-radius:50%;background:#ffd96c;box-shadow:0 0 12px #ffd96c
+ width:10px;height:10px;border-radius:50%;background:#fff27a;box-shadow:0 0 14px #fff27a,0 0 24px #39f58a
 }
 .stationCenter{text-align:center;margin-top:75px;position:relative;z-index:2}
 .onair{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:2px;color:var(--green);margin-bottom:11px}
@@ -331,7 +331,9 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
     font-size:8px;
   }
   .pointer {
-    height:205px;
+    top:13px;
+    height:84px;
+    width:5px;
   }
   .pointer:before {
     border-left-width:11px;
@@ -427,7 +429,7 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
   .navbtn, select { height:44px; }
   .bezel { min-height:445px; padding:9px; }
   .dial { height:255px; }
-  .pointer { height:190px; }
+  .pointer { top:12px; height:80px; width:5px; }
   .stationCenter { margin-top:61px; }
   .stationName { font-size:20px; }
   .spectrum { margin-top:15px; height:64px; }
@@ -446,13 +448,22 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 
 
 /* ===== PHASE 3 LIVE AUDIO STATE ENGINE ===== */
-.playerBar{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;margin:16px auto 0;max-width:820px;padding:10px;border:1px solid #365966;border-radius:14px;background:#07171eaa;position:relative;z-index:5}
-.playBtn{min-width:120px;height:44px;border:1px solid #8b6733;border-radius:10px;background:linear-gradient(#5b3d1d,#3b2815);color:#ffe4ad;font-weight:800;letter-spacing:1px;cursor:pointer;box-shadow:inset 0 1px #fff2}
-.playBtn:hover:not(:disabled){border-color:#ffd36a;transform:translateY(-1px)}
-.playBtn:disabled{opacity:.35;cursor:not-allowed}
-.volume{width:115px;accent-color:#ffd24a}
+.playerBar{display:grid;grid-template-columns:96px minmax(150px,.85fr) minmax(250px,1.65fr);gap:16px;align-items:center;margin:16px auto 0;max-width:820px;padding:12px;border:1px solid #365966;border-radius:14px;background:#07171eaa;position:relative;z-index:5}
+.playBtn{position:relative;width:88px;height:88px;min-width:88px;border:2px solid #39f58a;border-radius:50%;background:radial-gradient(circle at 42% 35%,#294d40 0%,#102a24 42%,#071914 72%,#04100d 100%);color:#f4f7df;font-weight:900;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 0 8px #39f58a88,0 0 22px #39f58a55,inset 0 0 18px #39f58a22;animation:powerGlowGreen 1.65s ease-in-out infinite;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease,transform .2s ease}
+.playBtn:hover:not(:disabled){transform:scale(1.04)}
+.playBtn:disabled{opacity:1;cursor:not-allowed}
+.playBtn .powerIcon{font-size:38px;line-height:36px;font-weight:500;text-shadow:0 0 8px currentColor}
+.playBtn .powerLabel{font-size:8px;letter-spacing:1.4px;line-height:10px}
+.playBtn.live{border-color:#ff4141;background:radial-gradient(circle at 42% 35%,#5b2929 0%,#351313 42%,#190909 72%,#0d0404 100%);box-shadow:0 0 8px #ff414188,0 0 24px #ff414155,inset 0 0 18px #ff414122;animation:powerGlowRed 1.25s ease-in-out infinite}
+.playBtn.connecting{border-color:#ffd45a;animation:powerGlowAmber 1s ease-in-out infinite}
+@keyframes powerGlowGreen{0%,100%{box-shadow:0 0 7px #39f58a66,0 0 18px #39f58a44,inset 0 0 14px #39f58a18}50%{box-shadow:0 0 14px #39f58acc,0 0 38px #39f58a77,inset 0 0 24px #39f58a33}}
+@keyframes powerGlowRed{0%,100%{box-shadow:0 0 7px #ff414166,0 0 18px #ff414144,inset 0 0 14px #ff414118}50%{box-shadow:0 0 15px #ff4141cc,0 0 40px #ff414177,inset 0 0 25px #ff414133}}
+@keyframes powerGlowAmber{0%,100%{box-shadow:0 0 7px #ffd45a66,0 0 18px #ffd45a44,inset 0 0 14px #ffd45a18}50%{box-shadow:0 0 14px #ffd45acc,0 0 34px #ffd45a66,inset 0 0 22px #ffd45a30}}
+.volumeWrap{display:flex;align-items:center;gap:8px;min-width:0}
+.volume{width:100%;accent-color:#39a8ff}
+.volumeValue{font-size:10px;color:#9db8c1;min-width:34px;text-align:right}
 .playerStatus{font-size:10px;letter-spacing:1px;color:#9db8c1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.playerStatus.live{color:#62f2a2}
+.playerStatus.live{color:#ff7777}
 .playerStatus.error{color:#ff7c88}
 .playerHint{font-size:9px;color:#6f8e99;text-align:center;margin-top:6px}
 .audioEl{display:none}
@@ -482,10 +493,14 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
   transition:height .08s linear, transform .08s linear, opacity .08s linear;
 }
 @media(max-width:700px){
- .playerBar{grid-template-columns:1fr 1fr;gap:7px;margin-top:10px;padding:8px}
- .playBtn{width:100%;min-width:0;height:46px}
- .volume{width:100%;height:32px}
- .playerStatus{grid-column:1/-1;text-align:center;font-size:8px}
+ .playerBar{grid-template-columns:1fr;gap:10px;margin-top:10px;padding:14px 12px 16px;justify-items:center}
+ .playBtn{width:136px;min-width:136px;height:136px}
+ .playBtn .powerIcon{font-size:52px;line-height:50px}
+ .playBtn .powerLabel{font-size:10px;letter-spacing:1.6px;line-height:12px}
+ .volumeWrap{grid-column:1;width:100%;max-width:430px;min-width:0}
+ .volume{width:100%;height:34px}
+ .volumeValue{font-size:11px;min-width:40px}
+ .playerStatus{grid-column:1;text-align:center;font-size:9px;width:100%}
  .playerHint{font-size:7px;line-height:1.3}
 }
 
@@ -521,39 +536,12 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
   from{opacity:.55;transform:scale(.9)}
   to{opacity:1;transform:scale(1.12)}
 }
-.stationBadge{
-  display:inline-flex;align-items:center;gap:7px;
-  margin-top:9px;padding:6px 10px;border:1px solid #5a7480;
-  border-radius:999px;background:#07151caa;color:#b9d4dc;
-  font-size:9px;letter-spacing:1.2px;
-}
-.programReadout{
-  margin-top:9px;color:#d7e8ed;font:13px Georgia,serif;
-  min-height:17px;
-}
-.consoleStatus{
-  display:inline-flex;align-items:center;gap:6px;
-  color:#8baab5;font-size:9px;letter-spacing:1.2px;margin-top:5px;
-}
-.consoleStatus .tiny{
-  width:6px;height:6px;border-radius:50%;background:#8199a1;
-}
-.consoleStatus.live{color:#9df4b9}
-.consoleStatus.live .tiny{background:#62f2a2;box-shadow:0 0 10px #62f2a2}
-.dialHint{
-  position:absolute;bottom:12px;left:0;right:0;text-align:center;
-  color:#65828d;font-size:8px;letter-spacing:1.4px;
-}
 @media(max-width:700px){
   .tuningScale{left:3%;right:3%;top:22px;height:50px}
   .tuningGlass{left:3%;right:3%;top:10px;height:69px}
   .tuningScale .major{height:22px}
   .tuningScale .minor{height:11px}
   .tuningScale .major::after{top:26px;font-size:7px}
-  .stationBadge{font-size:7px;padding:5px 8px;margin-top:6px}
-  .programReadout{font-size:10px;margin-top:6px}
-  .consoleStatus{font-size:7px;margin-top:4px}
-  .dialHint{font-size:6px;bottom:7px}
 }
 
 
@@ -686,6 +674,299 @@ body.wrLight{
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 
+
+
+/* ===== USER REQUEST: COMPACT START/STOP CONTROL ===== */
+.playBtn{
+  width:82px !important;
+  height:82px !important;
+  min-width:82px !important;
+  min-height:82px !important;
+  border-radius:50% !important;
+  padding:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:4px !important;
+  flex:0 0 82px !important;
+  position:relative !important;
+  overflow:visible !important;
+  background:radial-gradient(circle at 38% 30%,#5c7177 0%,#1b3035 35%,#07151a 72%,#061016 100%) !important;
+  border:2px solid #91a9ae !important;
+  box-shadow:
+    0 0 0 4px rgba(120,155,164,.16),
+    0 0 12px rgba(130,180,190,.45),
+    inset 0 0 12px rgba(210,235,240,.16) !important;
+  animation:wrCompactReadyGlow 2.2s ease-in-out infinite !important;
+  transition:box-shadow .35s ease, border-color .35s ease, transform .2s ease !important;
+}
+.playBtn:hover{transform:scale(1.04);}
+.playBtn:active{transform:scale(.97);}
+.playBtn .powerIcon{
+  font-size:25px !important;
+  line-height:1 !important;
+  color:#fff4c7 !important;
+  text-shadow:0 0 7px rgba(255,245,190,.9) !important;
+}
+.playBtn .powerLabel{
+  font-size:8px !important;
+  line-height:1 !important;
+  letter-spacing:1.4px !important;
+  font-weight:700 !important;
+  color:#f3f6f5 !important;
+  text-shadow:0 0 5px rgba(255,255,255,.45) !important;
+}
+.playBtn[data-state="playing"]{
+  border-color:#ff5a5a !important;
+  box-shadow:
+    0 0 0 4px rgba(255,70,70,.14),
+    0 0 16px rgba(255,55,55,.72),
+    0 0 30px rgba(255,30,30,.38),
+    inset 0 0 12px rgba(255,100,100,.18) !important;
+  animation:wrCompactPlayingGlow 1.45s ease-in-out infinite !important;
+}
+.playBtn[data-state="connecting"]{
+  border-color:#ffd45a !important;
+  box-shadow:
+    0 0 0 4px rgba(255,210,70,.13),
+    0 0 16px rgba(255,205,60,.65),
+    0 0 30px rgba(255,180,30,.32) !important;
+  animation:wrCompactConnectingGlow 1s ease-in-out infinite !important;
+}
+@keyframes wrCompactReadyGlow{
+  0%,100%{box-shadow:0 0 0 4px rgba(120,155,164,.12),0 0 10px rgba(70,210,130,.45),0 0 18px rgba(40,220,120,.18),inset 0 0 10px rgba(210,235,240,.14);}
+  50%{box-shadow:0 0 0 5px rgba(80,230,140,.18),0 0 20px rgba(50,255,125,.82),0 0 34px rgba(40,235,115,.38),inset 0 0 14px rgba(210,255,225,.22);}
+}
+@keyframes wrCompactPlayingGlow{
+  0%,100%{box-shadow:0 0 0 4px rgba(255,70,70,.12),0 0 12px rgba(255,50,50,.58),0 0 22px rgba(255,30,30,.25),inset 0 0 10px rgba(255,100,100,.16);}
+  50%{box-shadow:0 0 0 6px rgba(255,60,60,.2),0 0 24px rgba(255,45,45,.92),0 0 40px rgba(255,25,25,.42),inset 0 0 15px rgba(255,120,120,.24);}
+}
+@keyframes wrCompactConnectingGlow{
+  0%,100%{box-shadow:0 0 0 4px rgba(255,205,60,.12),0 0 10px rgba(255,190,40,.55);}
+  50%{box-shadow:0 0 0 6px rgba(255,215,70,.2),0 0 24px rgba(255,200,40,.9);}
+}
+@media(max-width:600px){
+  .playBtn{
+    width:82px !important;
+    height:82px !important;
+    min-width:82px !important;
+    min-height:82px !important;
+    flex-basis:82px !important;
+  }
+}
+
+/* =========================================================
+   FINAL PLAY/PAUSE CONTROL
+   Device-independent CSS button — no Unicode power glyph/image.
+   Designed to remain visually consistent on iPhone, Samsung and desktop.
+   ========================================================= */
+.playBtn{
+  width:112px !important;
+  height:112px !important;
+  min-width:112px !important;
+  min-height:112px !important;
+  flex:0 0 112px !important;
+  padding:0 !important;
+  border-radius:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  position:relative !important;
+  overflow:visible !important;
+  border:2px solid #d7f5fb !important;
+  background:
+    radial-gradient(circle at 38% 30%,
+      #35535b 0%,
+      #20383f 28%,
+      #10262e 58%,
+      #07161d 100%) !important;
+  color:#f7fbfc !important;
+  box-shadow:
+    0 0 0 4px rgba(118,205,220,.10),
+    0 0 12px rgba(142,224,238,.62),
+    0 0 28px rgba(76,194,217,.36),
+    inset 0 0 16px rgba(220,246,250,.14),
+    inset 0 -8px 18px rgba(0,0,0,.28) !important;
+  animation:wrPlayPauseReadyGlow 2.2s ease-in-out infinite !important;
+  transition:
+    transform .2s ease,
+    border-color .3s ease,
+    box-shadow .35s ease,
+    background .35s ease !important;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+.playBtn::before{
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border-radius:50%;
+  border:1px solid rgba(154,235,246,.24);
+  pointer-events:none;
+}
+
+.playBtn:hover:not(:disabled){
+  transform:scale(1.035) !important;
+}
+
+.playBtn:active{
+  transform:scale(.97) !important;
+}
+
+.playBtn:disabled{
+  opacity:1 !important;
+  cursor:not-allowed !important;
+}
+
+.playBtn .powerIcon{
+  display:none !important;
+}
+
+.playBtn .powerLabel{
+  display:block !important;
+  width:100% !important;
+  padding:0 7px !important;
+  margin:0 !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  font-family:Inter,Segoe UI,Arial,sans-serif !important;
+  font-size:10px !important;
+  line-height:1 !important;
+  letter-spacing:1.15px !important;
+  font-weight:800 !important;
+  color:#f7fbfc !important;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.78),
+    0 0 11px rgba(151,232,242,.42) !important;
+}
+
+/* Playing state: preserve the application's existing live-state meaning,
+   but render it as a red active glow around the new control. */
+.playBtn[data-state="playing"]{
+  border-color:#ffb2b2 !important;
+  background:
+    radial-gradient(circle at 38% 30%,
+      #55383b 0%,
+      #352126 32%,
+      #1d1116 64%,
+      #0e080b 100%) !important;
+  box-shadow:
+    0 0 0 4px rgba(255,70,70,.12),
+    0 0 16px rgba(255,70,70,.82),
+    0 0 34px rgba(255,35,35,.44),
+    inset 0 0 16px rgba(255,170,170,.13) !important;
+  animation:wrPlayPausePlayingGlow 1.45s ease-in-out infinite !important;
+}
+
+.playBtn[data-state="playing"] .powerLabel{
+  color:#fff2f2 !important;
+  text-shadow:
+    0 0 5px rgba(255,235,235,.85),
+    0 0 12px rgba(255,120,120,.55) !important;
+}
+
+/* Connecting/buffering state. */
+.playBtn[data-state="connecting"]{
+  border-color:#ffe7a0 !important;
+  background:
+    radial-gradient(circle at 38% 30%,
+      #544a2d 0%,
+      #302916 35%,
+      #171309 68%,
+      #0c0a06 100%) !important;
+  box-shadow:
+    0 0 0 4px rgba(255,210,70,.12),
+    0 0 16px rgba(255,205,60,.72),
+    0 0 30px rgba(255,180,30,.34),
+    inset 0 0 15px rgba(255,230,150,.12) !important;
+  animation:wrPlayPauseConnectingGlow 1s ease-in-out infinite !important;
+}
+
+@keyframes wrPlayPauseReadyGlow{
+  0%,100%{
+    box-shadow:
+      0 0 0 4px rgba(118,205,220,.09),
+      0 0 11px rgba(142,224,238,.52),
+      0 0 24px rgba(76,194,217,.27),
+      inset 0 0 14px rgba(220,246,250,.12),
+      inset 0 -8px 18px rgba(0,0,0,.28);
+  }
+  50%{
+    box-shadow:
+      0 0 0 5px rgba(140,225,238,.15),
+      0 0 20px rgba(151,235,246,.86),
+      0 0 38px rgba(76,210,232,.46),
+      inset 0 0 19px rgba(230,252,255,.18),
+      inset 0 -8px 18px rgba(0,0,0,.24);
+  }
+}
+
+@keyframes wrPlayPausePlayingGlow{
+  0%,100%{
+    box-shadow:
+      0 0 0 4px rgba(255,70,70,.10),
+      0 0 12px rgba(255,50,50,.60),
+      0 0 23px rgba(255,30,30,.27),
+      inset 0 0 12px rgba(255,120,120,.12);
+  }
+  50%{
+    box-shadow:
+      0 0 0 6px rgba(255,60,60,.18),
+      0 0 24px rgba(255,45,45,.94),
+      0 0 42px rgba(255,25,25,.45),
+      inset 0 0 17px rgba(255,120,120,.20);
+  }
+}
+
+@keyframes wrPlayPauseConnectingGlow{
+  0%,100%{
+    box-shadow:
+      0 0 0 4px rgba(255,205,60,.10),
+      0 0 11px rgba(255,190,40,.56),
+      0 0 24px rgba(255,180,30,.25),
+      inset 0 0 12px rgba(255,225,120,.10);
+  }
+  50%{
+    box-shadow:
+      0 0 0 6px rgba(255,215,70,.18),
+      0 0 24px rgba(255,200,40,.92),
+      0 0 38px rgba(255,180,25,.38),
+      inset 0 0 17px rgba(255,235,150,.16);
+  }
+}
+
+@media(max-width:700px){
+  .playBtn{
+    width:104px !important;
+    height:104px !important;
+    min-width:104px !important;
+    min-height:104px !important;
+    flex-basis:104px !important;
+  }
+
+  .playBtn .powerLabel{
+    font-size:9px !important;
+    letter-spacing:1.05px !important;
+    padding:0 6px !important;
+  }
+}
+
+@media(max-width:360px){
+  .playBtn{
+    width:96px !important;
+    height:96px !important;
+    min-width:96px !important;
+    min-height:96px !important;
+    flex-basis:96px !important;
+  }
+
+  .playBtn .powerLabel{
+    font-size:8px !important;
+    letter-spacing:.9px !important;
+  }
+}
+
 </style>
 
 <meta name="theme-color" content="#070a0e">
@@ -786,10 +1067,6 @@ body.wrLight{
           <div class="stationCenter">
             <div class="onair"><span class="dot"></span> LIVE RADIO CONSOLE</div>
             <div class="stationName" id="bigStation">SELECT A STATION</div>
-            <div class="city" id="bigCity">WORLD RADIO • PHASE 6</div>
-            <div class="stationBadge" id="stationBadge">📻 ANALOG TUNING CONSOLE</div>
-            <div class="programReadout" id="programReadout">Select a station to tune the receiver.</div>
-            <div class="consoleStatus" id="consoleStatus"><span class="tiny"></span><span id="consoleStatusText">STANDBY</span></div>
 
             <div class="spectrum" id="spectrum"></div>
             
@@ -797,12 +1074,13 @@ body.wrLight{
         </div>
 
         <div class="playerBar" id="playerBar">
-          <button class="playBtn" id="playBtn" type="button" disabled>▶ PLAY LIVE</button>
+          <button class="playBtn" id="playBtn" type="button" disabled aria-label="Start streaming" data-state="ready">
+            <span class="powerLabel" id="powerLabel">PLAY/PAUSE</span>
+          </button>
           <div class="playerStatus" id="playerStatus">Select a station to prepare the live stream.</div>
-          <label aria-label="Volume"><span style="font-size:9px;color:#8daab4">VOL</span> <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.85"></label>
-          <button class="smallBtn" id="stopBtn" type="button" style="flex:none;padding:8px 12px" disabled>■ STOP</button>
+          <label class="volumeWrap" aria-label="Volume"><span style="font-size:9px;color:#8daab4">VOL</span> <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.85"><span class="volumeValue" id="volumeValue">85%</span></label>
         </div>
-        <div class="playerHint" id="playerHint">Expanded worldwide station directory • Hindi, English and Bengali are not hard-coded; the application fetches currently available stations dynamically. The yellow spectrum activates only during actual live playback.</div>
+        <div class="playerHint" id="playerHint">Expanded worldwide station directory • Hindi, English and Bengali are not hard-coded; the application fetches currently available stations dynamically. The live spectrum activates only during actual live playback.</div>
         <audio class="audioEl" id="audio" preload="none" playsinline></audio>
 
         <div class="bottomInfo">
@@ -1041,7 +1319,7 @@ function updateStatus(){
   LEVELS.forEach((l,i)=>{$('step'+(i+1)).classList.toggle('done',!!state[l]);$('step'+(i+1)).classList.toggle('current',!state[l]&&(i===0||!!state[LEVELS[i-1]]))});
 }
 
-const audio=$('audio'), playBtn=$('playBtn'), stopBtn=$('stopBtn'), volume=$('volume'), playerStatus=$('playerStatus'), playerBar=$('playerBar');
+const audio=$('audio'), playBtn=$('playBtn'), volume=$('volume'), playerStatus=$('playerStatus'), playerBar=$('playerBar'), powerLabel=$('powerLabel'), volumeValue=$('volumeValue');
 
 /* =========================================================
    PHASE 3 — AUTHORITATIVE AUDIO STATE + ROBUST VISUALIZER
@@ -1060,6 +1338,10 @@ let audioContext=null;
 let visualizerFrame=0;
 let visualizerMode='css';
 
+function syncCompactButtonState(state){
+  if(!playBtn)return;
+  playBtn.dataset.state=state;
+}
 function setPlayerStatus(text,type=''){
   playerStatus.textContent=text;
   playerStatus.className='playerStatus'+(type?' '+type:'');
@@ -1174,43 +1456,48 @@ function stopSpectrumEngine(){
 function setPlayerState(next,text,type=''){
   playerState=next;
 
+  playBtn.classList.remove('live','connecting');
+
   if(next==='PLAYING'){
     setSpectrumMode('playing');
     startSpectrumEngine();
     playerBar.classList.add('playing');
-  }else if(next==='BUFFERING'){
-    setSpectrumMode('buffering');
+    playBtn.classList.add('live');
+    playBtn.disabled=false;
+    playBtn.setAttribute('aria-label','Pause streaming');
+    playBtn.dataset.state='playing';
+    if(powerLabel)powerLabel.textContent='PLAY/PAUSE';
+  }else if(next==='BUFFERING' || next==='CONNECTING'){
+    setSpectrumMode(next==='BUFFERING'?'buffering':'off');
     startSpectrumEngine();
     playerBar.classList.remove('playing');
+    playBtn.classList.add('connecting');
+    playBtn.disabled=true;
+    playBtn.setAttribute('aria-label','Connecting to stream');
+    playBtn.dataset.state='connecting';
+    if(powerLabel)powerLabel.textContent='PLAY/PAUSE';
+  }else if(next==='PAUSED'){
+    playerBar.classList.remove('playing');
+    setSpectrumMode('off');
+    stopSpectrumEngine();
+    playBtn.disabled=!stationObject();
+    playBtn.setAttribute('aria-label','Resume streaming');
+    playBtn.dataset.state='ready';
+    if(powerLabel)powerLabel.textContent='PLAY/PAUSE';
+  }else if(next==='STOPPED' || next==='ERROR' || next==='NO_AUDIO'){
+    playerBar.classList.remove('playing');
+    stopSpectrumEngine();
+    playBtn.disabled=!stationObject();
+    playBtn.setAttribute('aria-label','Start streaming');
+    playBtn.dataset.state='ready';
+    if(powerLabel)powerLabel.textContent='PLAY/PAUSE';
   }else{
     playerBar.classList.remove('playing');
     if(next!=='CONNECTING')stopSpectrumEngine();
-  }
-
-  if(next==='PLAYING'){
-    playBtn.disabled=false;
-    playBtn.textContent='Ⅱ PAUSE';
-    stopBtn.disabled=false;
-  }else if(next==='CONNECTING' || next==='BUFFERING'){
-    playBtn.disabled=true;
-    playBtn.textContent=next==='CONNECTING'?'⏳ CONNECTING':'⏳ BUFFERING';
-    stopBtn.disabled=false;
-  }else if(next==='PAUSED'){
-    playBtn.disabled=false;
-    playBtn.textContent='▶ PLAY LIVE';
-    stopBtn.disabled=false;
-  }else if(next==='STOPPED'){
     playBtn.disabled=!stationObject();
-    playBtn.textContent='▶ PLAY LIVE';
-    stopBtn.disabled=!stationObject();
-  }else if(next==='ERROR'){
-    playBtn.disabled=!stationObject();
-    playBtn.textContent='▶ PLAY LIVE';
-    stopBtn.disabled=!stationObject();
-  }else{
-    playBtn.disabled=!stationObject();
-    playBtn.textContent='▶ PLAY LIVE';
-    stopBtn.disabled=true;
+    playBtn.setAttribute('aria-label','Start streaming');
+    playBtn.dataset.state='ready';
+    if(powerLabel)powerLabel.textContent='PLAY/PAUSE';
   }
 
   if(text!==undefined)setPlayerStatus(text,type);
@@ -1318,21 +1605,12 @@ async function togglePlay(){
   audio.pause();
 }
 
-function stopPlayback(){
-  playerToken++;
-  audio.pause();
-  audio.removeAttribute('src');
-  audio.load();
-  stopSpectrumEngine();
-  setPlayerState(
-    'STOPPED',
-    stationObject()?'Ready to play the selected station.':'Select a station to prepare the live stream.'
-  );
-}
-
 playBtn.addEventListener('click',togglePlay);
-stopBtn.addEventListener('click',stopPlayback);
-volume.addEventListener('input',()=>{audio.volume=parseFloat(volume.value)});
+if(volumeValue)volumeValue.textContent=Math.round(parseFloat(volume.value)*100)+'%';
+volume.addEventListener('input',()=>{
+  audio.volume=parseFloat(volume.value);
+  if(volumeValue)volumeValue.textContent=Math.round(parseFloat(volume.value)*100)+'%';
+});
 
 audio.addEventListener('loadstart',()=>{
   if(audio.src && !audio.paused && playerState!=='PLAYING'){
@@ -1460,7 +1738,7 @@ function updateDisplay(){
   $('dStation').textContent=s?.name||'—';
   $('dFrequency').textContent='ONLINE';
   $('bigStation').textContent=s?.name||'SELECT A STATION';
-  $('bigCity').textContent=s?`${s.state||s.country||'Worldwide'} • ${s.codec||'STREAM'}${s.bitrate?' '+s.bitrate+' kbps':''}`:'WORLD RADIO • LIVE DIRECTORY';
+  // The former city/status text block was intentionally removed from the display.
   $('modeText').textContent=s?'STATION SELECTED':state.category?'CATEGORY':state.country?'COUNTRY':state.language?'LANGUAGE':'STANDBY';
   $('tuningText').textContent=s?(s.bitrate?s.bitrate+' kbps':'ONLINE'):'—';
   $('pointer').style.left=s?(30+((Math.abs(hashCode(s.stationuuid))%650)/650)*40)+'%':'28%';
@@ -1677,12 +1955,13 @@ const spectrum=$('spectrum');
 });
 fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);updateStatus();updateDisplay();initLanguages();
 
+
 /* ===== PHASE 5 JavaScript ===== */
 (function(){
   const scale = document.getElementById("tuningScale");
   if(!scale) return;
 
-  // Build a classic FM-style analog scale with major and minor ticks.
+  // Build the classic FM-style tuning scale.
   for(let f=88; f<=106; f+=1){
     const major=document.createElement("div");
     major.className="major";
@@ -1698,88 +1977,7 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
       }
     }
   }
-
-  const oldUpdate = window.updateDisplay;
-  // Expose a safe Phase-5 updater without changing the Phase-4 selection engine.
-  window.phase5RefreshConsole = function(){
-    const s = document.getElementById("station");
-    const l = document.getElementById("language");
-    const c = document.getElementById("country");
-    const cat = document.getElementById("category");
-    const status = document.getElementById("consoleStatus");
-    const statusText = document.getElementById("consoleStatusText");
-    const program = document.getElementById("programReadout");
-    const badge = document.getElementById("stationBadge");
-    if(!s) return;
-
-    const hasStation = !!s.value;
-    if(!hasStation){
-      program.textContent="Select a station to tune the receiver.";
-      badge.textContent="📻 ANALOG TUNING CONSOLE";
-      status.classList.remove("live");
-      statusText.textContent="STANDBY";
-      return;
-    }
-
-    // Locate the selected station from the Phase-4 data model when available.
-    let item = null;
-    try{
-      if(typeof stationData !== "undefined" && l.value && c.value && cat.value){
-        const arr = stationData.filter(x =>
-          (x.language||"")===l.value &&
-          (x.country||"")===c.value &&
-          (x.category||"")===cat.value
-        );
-        item = arr.find(x => (x.name||"")===s.value) || null;
-      }
-    }catch(e){}
-
-    const codec = item && item.codec ? item.codec.toUpperCase() : "";
-    const bitrate = item && item.bitrate ? item.bitrate+" kbps" : "";
-    const parts = [codec, bitrate].filter(Boolean);
-    program.textContent = parts.length ? parts.join(" • ") : "Station selected • ready to play";
-    badge.textContent = "📻 " + (item && item.country ? item.country.toUpperCase() : "WORLD") + " • TUNED";
-    status.classList.add("live");
-    statusText.textContent="STATION READY";
-  };
-
-  // Wrap updateDisplay so every Phase-4 selection change also refreshes Phase-5 UI.
-  if(typeof window.updateDisplay === "function"){
-    const original = window.updateDisplay;
-    window.updateDisplay = function(){
-      original.apply(this, arguments);
-      window.phase5RefreshConsole();
-    };
-  }
-
-  // Reflect common Phase-4 audio events if an audio element is present.
-  const audio = document.querySelector("audio");
-  if(audio){
-    const status=document.getElementById("consoleStatus");
-    const statusText=document.getElementById("consoleStatusText");
-    audio.addEventListener("playing",()=>{
-      status.classList.add("live");
-      statusText.textContent="LIVE • RECEIVING";
-    });
-    audio.addEventListener("pause",()=>{
-      status.classList.remove("live");
-      statusText.textContent=(typeof playerState!=="undefined" && playerState==="STOPPED")?"STOPPED":"PAUSED";
-    });
-    audio.addEventListener("waiting",()=>{
-      status.classList.remove("live");
-      statusText.textContent="BUFFERING…";
-    });
-    audio.addEventListener("error",()=>{
-      status.classList.remove("live");
-      statusText.textContent="STREAM ERROR";
-    });
-  }
-
-  window.phase5RefreshConsole();
 })();
-
-
-
 </script>
 
 <!-- ===== PHASE 8 FOOTER ===== -->
@@ -1927,3 +2125,13 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);update
 
 </body>
 </html>
+
+<style id="clean-display-adjustment">
+/* Clean display panel: no city/badge/program/standby text block. */
+.stationCenter{
+  margin-top:75px;
+}
+.stationCenter .stationName{
+  margin-bottom:0;
+}
+</style>
