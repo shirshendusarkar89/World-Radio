@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Radio — Expanded Worldwide Stations</title>
+<title>World Radio — Expanded Worldwide Stations (English Retrieval Fixed)</title>
 <style>
 :root{
   --bg:#07131b;
@@ -1202,6 +1202,203 @@ body.wrLight{
   }
 }
 
+
+
+/* =========================================================
+   FINAL VISUAL OVERRIDE — COMPACT HORIZONTAL PHYSICAL PLAY/PAUSE
+   IMPORTANT: visual layer only. No radio-operation JavaScript is changed.
+   The existing #playBtn click handler and audio state engine remain intact.
+   ========================================================= */
+.playerBar{
+  grid-template-columns:190px minmax(150px,.85fr) minmax(250px,1.65fr);
+}
+
+.playBtn{
+  width:190px !important;
+  height:58px !important;
+  min-width:190px !important;
+  min-height:58px !important;
+  flex:0 0 190px !important;
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:18px !important;
+  padding:0 18px !important;
+  border-radius:9px !important;
+  position:relative !important;
+  overflow:visible !important;
+  cursor:pointer !important;
+  border:2px solid #55e7ff !important;
+  background:
+    linear-gradient(180deg,#176384 0%,#0d4866 46%,#07334b 100%) !important;
+  color:#f7fbfc !important;
+  box-shadow:
+    0 0 0 2px rgba(83,224,247,.12),
+    0 0 10px rgba(54,218,244,.72),
+    0 0 24px rgba(31,174,211,.40),
+    inset 0 3px 0 rgba(183,244,255,.38),
+    inset 0 -7px 12px rgba(0,0,0,.42),
+    inset 3px 0 0 rgba(118,220,241,.16),
+    inset -3px 0 0 rgba(0,0,0,.25) !important;
+  animation:compactRadioReadyGlow 2.2s ease-in-out infinite !important;
+  transition:transform .18s ease,box-shadow .3s ease,border-color .3s ease,background .3s ease !important;
+}
+
+/* Beveled upper/lower highlights, echoing the supplied physical-button image. */
+.playBtn::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:4px !important;
+  border-radius:5px !important;
+  border-top:2px solid rgba(180,246,255,.38) !important;
+  border-left:1px solid rgba(110,226,247,.28) !important;
+  border-right:1px solid rgba(0,0,0,.25) !important;
+  border-bottom:2px solid rgba(0,0,0,.38) !important;
+  pointer-events:none !important;
+  box-shadow:inset 0 5px 7px rgba(255,255,255,.07),inset 0 -6px 9px rgba(0,0,0,.20) !important;
+}
+
+/* The yellow physical Play/Pause symbol. */
+.playBtn::after{
+  content:"" !important;
+  position:relative !important;
+  z-index:2 !important;
+  width:0 !important;
+  height:0 !important;
+  flex:0 0 auto !important;
+  border-top:14px solid transparent !important;
+  border-bottom:14px solid transparent !important;
+  border-left:23px solid #ffe51f !important;
+  filter:
+    drop-shadow(0 0 2px #fff6a0)
+    drop-shadow(0 0 6px #ffd400)
+    drop-shadow(0 0 12px rgba(255,211,0,.85)) !important;
+}
+
+.playBtn .powerLabel{
+  position:relative !important;
+  z-index:2 !important;
+  width:auto !important;
+  padding:0 !important;
+  margin:0 !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  letter-spacing:1.25px !important;
+  font-weight:900 !important;
+  color:#f8fdff !important;
+  text-shadow:0 0 5px rgba(255,255,255,.85),0 0 10px rgba(104,224,242,.55) !important;
+}
+
+.playBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  box-shadow:
+    0 0 0 2px rgba(83,224,247,.16),
+    0 0 14px rgba(54,218,244,.90),
+    0 0 30px rgba(31,174,211,.52),
+    inset 0 3px 0 rgba(183,244,255,.42),
+    inset 0 -7px 12px rgba(0,0,0,.42) !important;
+}
+
+.playBtn:active:not(:disabled){transform:translateY(1px) !important;}
+
+/* PLAYING = same physical button, but the yellow symbol becomes Pause. */
+.playBtn[data-state="playing"]{
+  border-color:#62eaff !important;
+  background:
+    linear-gradient(180deg,#176c86 0%,#0d4c64 46%,#073444 100%) !important;
+  box-shadow:
+    0 0 0 2px rgba(83,224,247,.15),
+    0 0 12px rgba(54,218,244,.82),
+    0 0 28px rgba(31,174,211,.48),
+    inset 0 3px 0 rgba(183,244,255,.40),
+    inset 0 -7px 12px rgba(0,0,0,.42) !important;
+  animation:compactRadioPlayingGlow 1.35s ease-in-out infinite !important;
+}
+
+.playBtn[data-state="playing"]::after{
+  width:8px !important;
+  height:28px !important;
+  border:0 !important;
+  border-radius:1px !important;
+  background:linear-gradient(90deg,#fff04a 0 42%,transparent 42% 58%,#fff04a 58% 100%) !important;
+  filter:
+    drop-shadow(0 0 2px #fff8a8)
+    drop-shadow(0 0 6px #ffd400)
+    drop-shadow(0 0 12px rgba(255,211,0,.85)) !important;
+}
+
+.playBtn[data-state="connecting"]{
+  border-color:#ffd75a !important;
+  animation:compactRadioConnectingGlow 1s ease-in-out infinite !important;
+}
+
+.playBtn[data-state="connecting"]::after{
+  border-left-color:#ffd83d !important;
+}
+
+@keyframes compactRadioReadyGlow{
+  0%,100%{box-shadow:0 0 0 2px rgba(83,224,247,.10),0 0 9px rgba(54,218,244,.58),0 0 20px rgba(31,174,211,.28),inset 0 3px 0 rgba(183,244,255,.32),inset 0 -7px 12px rgba(0,0,0,.42);}
+  50%{box-shadow:0 0 0 3px rgba(83,224,247,.16),0 0 15px rgba(54,218,244,.86),0 0 30px rgba(31,174,211,.44),inset 0 3px 0 rgba(183,244,255,.40),inset 0 -7px 12px rgba(0,0,0,.42);}
+}
+
+@keyframes compactRadioPlayingGlow{
+  0%,100%{box-shadow:0 0 0 2px rgba(83,224,247,.12),0 0 10px rgba(54,218,244,.66),0 0 22px rgba(31,174,211,.32),inset 0 3px 0 rgba(183,244,255,.34),inset 0 -7px 12px rgba(0,0,0,.42);}
+  50%{box-shadow:0 0 0 3px rgba(83,224,247,.19),0 0 18px rgba(54,218,244,.96),0 0 34px rgba(31,174,211,.50),inset 0 3px 0 rgba(183,244,255,.44),inset 0 -7px 12px rgba(0,0,0,.42);}
+}
+
+@keyframes compactRadioConnectingGlow{
+  0%,100%{box-shadow:0 0 0 2px rgba(255,210,70,.10),0 0 10px rgba(255,200,50,.55),0 0 20px rgba(255,180,30,.22),inset 0 3px 0 rgba(255,245,190,.28),inset 0 -7px 12px rgba(0,0,0,.42);}
+  50%{box-shadow:0 0 0 3px rgba(255,215,70,.18),0 0 18px rgba(255,205,50,.86),0 0 30px rgba(255,180,30,.38),inset 0 3px 0 rgba(255,245,190,.38),inset 0 -7px 12px rgba(0,0,0,.42);}
+}
+
+@media(max-width:700px){
+  .playerBar{
+    grid-template-columns:1fr !important;
+    gap:7px !important;
+    margin-top:7px !important;
+    padding:9px 10px 10px !important;
+  }
+  .playBtn{
+    width:min(190px,72vw) !important;
+    height:52px !important;
+    min-width:min(190px,72vw) !important;
+    min-height:52px !important;
+    flex-basis:min(190px,72vw) !important;
+    gap:14px !important;
+    padding:0 14px !important;
+  }
+  .playBtn::after{
+    border-top-width:12px !important;
+    border-bottom-width:12px !important;
+    border-left-width:20px !important;
+  }
+  .playBtn[data-state="playing"]::after{
+    width:7px !important;
+    height:24px !important;
+  }
+  .playBtn .powerLabel{
+    font-size:10px !important;
+    letter-spacing:1px !important;
+  }
+  .playerStatus{margin-top:0 !important;}
+  .volumeWrap{margin-top:0 !important;}
+}
+
+@media(max-width:360px){
+  .playBtn{
+    width:160px !important;
+    min-width:160px !important;
+    flex-basis:160px !important;
+    height:48px !important;
+    min-height:48px !important;
+    gap:11px !important;
+  }
+  .playBtn .powerLabel{font-size:9px !important;letter-spacing:.8px !important;}
+  .playBtn::after{border-top-width:11px !important;border-bottom-width:11px !important;border-left-width:18px !important;}
+  .playBtn[data-state="playing"]::after{height:22px !important;width:7px !important;}
+}
+
 </style>
 
 <meta name="theme-color" content="#070a0e">
@@ -1692,7 +1889,7 @@ const categoryRules=[
   ['Community',['community']],
   ['Ambient / Relax',['ambient','relax','chillout','lounge','meditation']]
 ];
-const categoryIcons={News:'📰',Comedy:'😂',Sports:'⚽',Talk:'🎙️',Music:'🎵',Pop:'🎤',Rock:'🎸',Jazz:'🎷',Classical:'🎻',Electronic:'🎛️',Country:'🤠',Oldies:'📻','Hip Hop':'🎧','R&B':'🎶',Reggae:'🌴',Religious:'🕊️',Culture:'🎭',Education:'📚',Kids:'🧒',Business:'💼',Community:'👥','Ambient / Relax':'🧘'};
+const categoryIcons={'All Stations':'📻',News:'📰',Comedy:'😂',Sports:'⚽',Talk:'🎙️',Music:'🎵',Pop:'🎤',Rock:'🎸',Jazz:'🎷',Classical:'🎻',Electronic:'🎛️',Country:'🤠',Oldies:'📻','Hip Hop':'🎧','R&B':'🎶',Reggae:'🌴',Religious:'🕊️',Culture:'🎭',Education:'📚',Kids:'🧒',Business:'💼',Community:'👥','Ambient / Relax':'🧘'};
 
 function apiUrl(base,path,params={}){
   const u=new URL(base+path);
@@ -1794,12 +1991,23 @@ function matchesCategory(s,cat){
 }
 function categoriesFromStations(stations){
   const found=new Set();
+
+  // Always expose all returned stations so that a station is never hidden
+  // merely because Radio Browser uses a tag we do not recognize.
+  if(Array.isArray(stations) && stations.some(s=>s && s.stationuuid)){
+    found.add('All Stations');
+  }
+
   stations.forEach(s=>categoryRules.forEach(([cat,keys])=>{
     const tags=stationTags(s), raw=tags.join(' ');
     if(keys.some(k=>tags.includes(k)||raw.includes(k)))found.add(cat);
   }));
-  // If tags contain no recognized genre, Music is a useful neutral fallback only when the station is tagged as music.
-  return [...found].sort((a,b)=>a.localeCompare(b));
+
+  return [...found].sort((a,b)=>{
+    if(a==='All Stations')return -1;
+    if(b==='All Stations')return 1;
+    return a.localeCompare(b);
+  });
 }
 function uniqueCountries(stations){
   const map=new Map();
@@ -1913,9 +2121,47 @@ function mergeStationLists(...lists){
   return [...map.values()];
 }
 
+/* Broader language retrieval:
+   Radio Browser documents both /stations/search?language=... and
+   /stations/bylanguage/{searchterm}.  Using both prevents a language from
+   disappearing simply because stations are represented differently in the
+   directory. */
+async function fetchLanguageStations(languageName, extra={}){
+  const name=String(languageName||'').trim();
+  if(!name)return [];
+
+  const searchPromise=fetchJson('/json/stations/search',{
+    language:name,
+    ...extra,
+    hidebroken:'true',
+    limit:String(STATION_POOL_LIMIT)
+  });
+
+  const byLanguagePromise=fetchJson(
+    '/json/stations/bylanguage/'+encodeURIComponent(name),
+    {
+      hidebroken:'true',
+      order:extra.order||'country',
+      reverse:extra.reverse||'false',
+      limit:String(STATION_POOL_LIMIT)
+    }
+  );
+
+  const [a,b]=await Promise.allSettled([searchPromise,byLanguagePromise]);
+  const searchRows=a.status==='fulfilled' && Array.isArray(a.value)?a.value:[];
+  let byRows=b.status==='fulfilled' && Array.isArray(b.value)?b.value:[];
+
+  /* Apply country restriction locally to the by-language result because
+     the path endpoint does not accept country as a query filter. */
+  if(extra.country){
+    const wanted=String(extra.country).trim().toLowerCase();
+    byRows=byRows.filter(s=>String(s.country||'').trim().toLowerCase()===wanted);
+  }
+
+  return mergeStationLists(searchRows,byRows);
+}
+
 async function fetchBengaliStations(extra={}){
-  /* Bengali is intentionally worldwide: combine language and tag searches,
-     then de-duplicate by Radio Browser station UUID. */
   const searches=[
     {language:'bengali'},
     {language:'bangla'},
@@ -2511,7 +2757,7 @@ async function loadCountries(){
   try{
     const stations=isBengaliLanguage(state.language)
       ? await fetchBengaliStations({order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)})
-      : await fetchJson('/json/stations/search',{language:state.language,hidebroken:'true',order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)});
+      : await fetchLanguageStations(state.language,{order:'country',limit:String(COUNTRY_DISCOVERY_LIMIT)});
     if(serial!==requestSerial)return;
     const countries=uniqueCountries(stations);
     if(!countries.length)throw new Error('No countries found');
@@ -2529,15 +2775,19 @@ async function loadCategories(){
   try{
     currentStations=isBengaliLanguage(state.language)
       ? await fetchBengaliStations({countryExact:'true',country:state.country,order:'votes',reverse:'true'})
-      : await fetchJson('/json/stations/search',{
-        language:state.language,
+      : await fetchLanguageStations(state.language,{
         countryExact:'true',
         country:state.country,
-        hidebroken:'true',
         order:'votes',
         reverse:'true',
         limit:String(STATION_POOL_LIMIT)
       });
+
+    /* Final country guard: keep only stations physically assigned to the
+       selected country, regardless of how the API represented the language. */
+    currentStations=currentStations.filter(s=>
+      String(s.country||'').trim().toLowerCase()===String(state.country||'').trim().toLowerCase()
+    );
     if(serial!==requestSerial)return;
     const cats=categoriesFromStations(currentStations);
     if(!cats.length)throw new Error('No recognizable categories');
@@ -2551,7 +2801,9 @@ async function loadCategories(){
 function loadStations(){
   clearBelow('category');state.station='';
   if(!state.category){updateStatus();updateDisplay();return}
-  const filtered=currentStations.filter(s=>matchesCategory(s,state.category)&&s.stationuuid);
+  const filtered=(state.category==='All Stations'
+    ? currentStations.filter(s=>s&&s.stationuuid)
+    : currentStations.filter(s=>matchesCategory(s,state.category)&&s.stationuuid));
   filtered.sort((a,b)=>
     (Number(b.lastcheckok||0)-Number(a.lastcheckok||0)) ||
     (Number(b.votes||0)-Number(a.votes||0)) ||
