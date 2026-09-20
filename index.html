@@ -179,49 +179,193 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
  .metric:nth-child(n+5){display:none}
  .bezel{padding:14px;border-width:5px;min-height:570px}
  .dial{margin-left:0;margin-right:0}
- .bottomInfo{left:16px;right:16px}
- .analogKnob{width:58px;height:58px}
  .spectrum{gap:3px}
  .bar{width:4px}
 }
 
 
 
-/* ===== PRE-CONFIGURED CHANNELS PANEL ===== */
+
+/* ===== SELECT YOUR CHANNEL COLLAPSIBLE PANEL ===== */
+.channelSelector{
+  width:100%;
+  border:1px solid #315e70;
+  border-radius:15px;
+  background:linear-gradient(145deg,#102d39,#081a22);
+  box-shadow:inset 0 1px #ffffff12,0 0 18px #54d9ff10;
+  overflow:hidden;
+}
+.channelSelectorSummary{
+  list-style:none;
+  min-height:44px;
+  padding:10px 13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+  color:#e9f6fa;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.25px;
+  text-transform:uppercase;
+  background:linear-gradient(180deg,#143746,#0b202a);
+  border-bottom:1px solid transparent;
+  transition:background .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.channelSelectorSummary::-webkit-details-marker{display:none}
+.channelSelectorSummary:hover{
+  background:linear-gradient(180deg,#184455,#0d2631);
+  box-shadow:inset 0 0 20px #54d9ff0b,0 0 12px #54d9ff10;
+}
+.channelSelectorSummary:focus-visible{
+  outline:2px solid #54d9ff;
+  outline-offset:-2px;
+}
+.channelCaret{
+  flex:0 0 auto;
+  color:#54d9ff;
+  font-size:12px;
+  line-height:1;
+  text-shadow:0 0 8px #54d9ff80;
+  transition:transform .18s ease;
+}
+.channelSelectorTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.channelSelectorDot{
+  flex:0 0 auto;
+  color:#54d9ff;
+  font-size:13px;
+  line-height:1;
+}
+.channelSelectorAction{
+  flex:0 0 auto;
+  color:#a9c2cb;
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.7px;
+  text-transform:none;
+}
+.channelSelector[open]{
+  border-color:#3b7083;
+  box-shadow:inset 0 1px #ffffff12,0 0 22px #54d9ff16;
+}
+.channelSelector[open] .channelSelectorSummary{
+  border-bottom-color:#ffffff12;
+}
+.channelSelector[open] .channelCaret{
+  transform:rotate(180deg);
+}
+.channelSelector[open] .channelSelectorAction{
+  font-size:0;
+}
+.channelSelector[open] .channelSelectorAction:after{
+  content:'Collapse';
+  font-size:9px;
+}
+.channelSelectorBody{
+  padding:12px 0 0;
+}
+@media(max-width:650px){
+  .channelSelectorSummary{
+    min-height:42px;
+    padding:9px 10px;
+    gap:6px;
+    font-size:10px;
+    letter-spacing:1px;
+  }
+  .channelSelectorAction,.channelSelector[open] .channelSelectorAction:after{font-size:8px}
+  .channelSelectorBody{padding-top:10px}
+}
+
+/* ===== PRE-CONFIGURED LANGUAGE COLLAPSIBLE PANEL ===== */
 .preconfig{
   margin-top:10px;
-  border:1px solid #294d5b;
-  border-radius:13px;
-  background:linear-gradient(160deg,#0c2029,#08171e);
-  box-shadow:inset 0 1px #ffffff08;
+  width:100%;
+  border:1px solid #315e70;
+  border-radius:15px;
+  background:linear-gradient(145deg,#102d39,#081a22);
+  box-shadow:inset 0 1px #ffffff12,0 0 18px #54d9ff10;
   overflow:hidden;
 }
 .preconfig>summary{
   list-style:none;
-  cursor:pointer;
-  min-height:40px;
-  padding:10px 12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  color:#d7edf2;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:1.4px;
-  text-transform:uppercase;
-  user-select:none;
 }
 .preconfig>summary::-webkit-details-marker{display:none}
-.preconfig>summary:after{
-  content:'›';
-  color:#78a5b3;
-  font-size:20px;
+.preconfigSummary{
+  min-height:44px;
+  padding:10px 13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+  color:#e9f6fa;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.25px;
+  text-transform:uppercase;
+  background:linear-gradient(180deg,#143746,#0b202a);
+  border-bottom:1px solid transparent;
+  transition:background .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.preconfigSummary:hover{
+  background:linear-gradient(180deg,#184455,#0d2631);
+  box-shadow:inset 0 0 20px #54d9ff0b,0 0 12px #54d9ff10;
+}
+.preconfigSummary:focus-visible{
+  outline:2px solid #54d9ff;
+  outline-offset:-2px;
+}
+.preconfigCaret{
+  flex:0 0 auto;
+  color:#54d9ff;
+  font-size:12px;
   line-height:1;
-  transform:rotate(0deg);
+  text-shadow:0 0 8px #54d9ff80;
   transition:transform .18s ease;
 }
-.preconfig[open]>summary:after{transform:rotate(90deg);color:var(--cyan)}
+.preconfigTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.preconfigDot{
+  flex:0 0 auto;
+  color:#54d9ff;
+  font-size:13px;
+  line-height:1;
+}
+.preconfigAction{
+  flex:0 0 auto;
+  color:#a9c2cb;
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.7px;
+  text-transform:none;
+}
+.preconfig[open]{
+  border-color:#3b7083;
+  box-shadow:inset 0 1px #ffffff12,0 0 22px #54d9ff16;
+}
+.preconfig[open] .preconfigSummary{
+  border-bottom-color:#ffffff12;
+}
+.preconfig[open] .preconfigCaret{
+  transform:rotate(180deg);
+}
+.preconfig[open] .preconfigAction{
+  font-size:0;
+}
+.preconfig[open] .preconfigAction:after{
+  content:'Collapse';
+  font-size:9px;
+}
 .preconfigBody{
   padding:2px 12px 13px;
   border-top:1px solid #ffffff0d;
@@ -285,6 +429,16 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
 .preconfigNav select{height:34px;font-size:11px;padding:0 7px}
 .preconfigHint{
   min-height:18px;margin-top:7px;color:#637f8b;font-size:8px;line-height:1.3;
+}
+@media(max-width:650px){
+  .preconfigSummary{
+    min-height:42px;
+    padding:9px 10px;
+    gap:6px;
+    font-size:10px;
+    letter-spacing:1px;
+  }
+  .preconfigAction,.preconfig[open] .preconfigAction:after{font-size:8px}
 }
 @media(max-width:700px){
   .preconfigLanguages{grid-template-columns:1fr 1fr;gap:5px}
@@ -488,31 +642,6 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
     max-width:340px;
   }
 
-  .bottomInfo {
-    position:relative;
-    left:auto; right:auto; bottom:auto;
-    margin-top:5px;
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    gap:7px;
-    align-items:center;
-    padding:0 3px 2px;
-  }
-  .analogKnob {
-    width:50px;
-    height:50px;
-    border-width:5px;
-  }
-  .analogKnob:after {
-    height:15px;
-    width:2px;
-    top:5px;
-  }
-  .readout {
-    font-size:8px;
-    letter-spacing:.5px;
-  }
-  .readout strong {
     font-size:11px;
     margin-top:2px;
   }
@@ -608,7 +737,6 @@ select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #54d9ff14}
  .volume{width:100%;height:34px}
  .volumeValue{font-size:11px;min-width:40px}
  .playerStatus{grid-column:1;text-align:center;font-size:9px;width:100%}
- .playerHint{font-size:7px;line-height:1.3}
 }
 
 
@@ -1080,6 +1208,230 @@ body.wrLight{
 <meta name="color-scheme" content="dark light">
 <meta name="description" content="World Radio — discover live radio stations from around the world with live playback.">
 
+
+<style id="physical-radio-layer">
+/* =========================================================
+   PHYSICAL RADIO SHELL — VISUAL LAYER
+   The existing World Radio controls remain functional. The shell
+   uses real HTML/CSS controls; the speaker grilles and FAV/REC/SET
+   blocks are visual only for now.
+   ========================================================= */
+:root{
+  --radio-body1:#6f4a2c;
+  --radio-body2:#3b2416;
+  --radio-edge:#1c120c;
+  --radio-metal:#a58b68;
+  --radio-panel:#0c171b;
+  --radio-glow:#65dff4;
+}
+.radio{background:transparent;border:0;box-shadow:none;padding:0;min-width:0}
+.radioFinishBar{
+  display:flex;justify-content:flex-end;align-items:center;margin:0 0 8px;
+}
+.radioFinishBar label{display:flex;align-items:center;gap:7px;color:#8ea5ae;font-size:8px;letter-spacing:1.3px}
+.radioFinishBar select{
+  width:auto;height:30px;min-width:145px;padding:0 8px;font-size:10px;
+  border-radius:8px;border:1px solid #405864;background:#101b22;color:#e9f3f6;
+}
+.radioUnit{
+  display:block;
+  padding:14px;border-radius:26px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.10),transparent 15%),
+    linear-gradient(155deg,var(--radio-body1),var(--radio-body2) 58%,#1c120d);
+  border:5px solid var(--radio-edge);
+  box-shadow:0 22px 55px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.22),inset 0 -12px 22px rgba(0,0,0,.35);
+  position:relative;overflow:hidden;
+}
+.radioUnit::before{
+  content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.15);border-radius:20px;pointer-events:none;z-index:0;
+}
+.radioUnit>*{position:relative;z-index:1}
+.radioUnit .bezel{
+  min-height:660px;height:100%;border-width:7px;border-radius:17px;
+  background:radial-gradient(circle at 50% 43%,#17485b 0,#0d3545 25%,#0a2633 58%,#071820 100%);
+}
+
+/* Colour-pattern presets. These change the physical cabinet only; the
+   live audio/data logic is untouched. */
+.radioUnit.finish-black{--radio-body1:#30363a;--radio-body2:#111417;--radio-edge:#090b0d}
+.radioUnit.finish-silver{--radio-body1:#a9b0b2;--radio-body2:#555e62;--radio-edge:#202529}
+.radioUnit.finish-ivory{--radio-body1:#d5c6a7;--radio-body2:#75694f;--radio-edge:#342d20}
+.radioUnit.finish-teal{--radio-body1:#1d6671;--radio-body2:#0a2b31;--radio-edge:#06171b}
+.radioUnit.finish-silver .speakerGrille,.radioUnit.finish-ivory .speakerGrille{background:linear-gradient(145deg,#46494a,#17191a)}
+.radioUnit.finish-silver .hardwareButton,.radioUnit.finish-ivory .hardwareButton{background:linear-gradient(180deg,#d0d4d4,#555b5d);color:#182024;border-color:#dfe4e4}
+
+@media(max-width:950px){
+  .radioUnit{padding:10px}
+  .radioUnit .bezel{min-height:700px}
+}
+@media(max-width:700px){
+  .radioFinishBar{justify-content:stretch}
+  .radioFinishBar label{width:100%;justify-content:space-between}
+  .radioFinishBar select{flex:1;min-width:0;height:36px;font-size:12px}
+  .radioUnit{padding:8px;border-radius:20px}
+  .radioUnit .bezel{min-height:620px;padding:11px}
+}
+@media(max-width:430px){
+  .radioUnit .bezel{min-height:590px}
+}
+</style>
+
+
+<style id="compact-radio-controls-v3">
+/* =========================================================
+   V3 — COMPACT LOWER CONTROL AREA
+   RADIO FINISH → SELECT YOUR CHANNEL → PRE-CONFIGURED LANGUAGE
+   Keep controls touch-friendly while minimizing vertical space.
+   ========================================================= */
+.controls{
+  padding:0 0 5px !important;
+  margin:0 !important;
+}
+.radioFinishBar{
+  display:grid !important;
+  grid-template-columns:auto minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:7px !important;
+  width:100% !important;
+  margin:0 0 4px !important;
+  padding:0 !important;
+}
+.radioFinishBar label{
+  display:contents !important;
+}
+.radioFinishBar label > span{
+  color:#7f98a2 !important;
+  font-size:7px !important;
+  line-height:1 !important;
+  letter-spacing:1.05px !important;
+  white-space:nowrap !important;
+}
+.radioFinishBar select{
+  width:100% !important;
+  min-width:0 !important;
+  height:32px !important;
+  padding:0 9px !important;
+  border-radius:8px !important;
+  border:1px solid #304b57 !important;
+  background:linear-gradient(180deg,#14232b,#0d181f) !important;
+  color:#dce9ed !important;
+  font-size:10px !important;
+  line-height:1 !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 0 8px rgba(84,217,255,.035) !important;
+}
+.channelSelector,
+.preconfig{
+  border-radius:11px !important;
+  margin:0 !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 0 10px rgba(84,217,255,.045) !important;
+}
+.channelSelector{margin-bottom:4px !important}
+.channelSelectorSummary,
+.preconfigSummary{
+  min-height:38px !important;
+  height:38px !important;
+  box-sizing:border-box !important;
+  padding:6px 10px !important;
+  gap:6px !important;
+  font-size:9px !important;
+  letter-spacing:.85px !important;
+  line-height:1 !important;
+}
+.channelCaret,.preconfigCaret{
+  font-size:10px !important;
+}
+.channelSelectorDot,.preconfigDot{
+  font-size:10px !important;
+}
+.channelSelectorAction,.preconfigAction,
+.channelSelector[open] .channelSelectorAction:after,
+.preconfig[open] .preconfigAction:after{
+  font-size:7px !important;
+  letter-spacing:.45px !important;
+}
+.channelSelectorBody{
+  padding:7px 0 0 !important;
+}
+.preconfig{
+  margin-top:4px !important;
+}
+.preconfigBody{
+  padding:1px 8px 8px !important;
+}
+.preconfigLanguages{
+  gap:4px !important;
+  padding:6px 0 7px !important;
+}
+.preconfigLang{
+  padding:5px 6px !important;
+  border-radius:7px !important;
+  font-size:9px !important;
+}
+.preconfigRadio{
+  width:14px !important;
+  height:14px !important;
+  min-width:14px !important;
+}
+.preconfigSelectors{
+  gap:6px !important;
+}
+.preconfigFieldLabel{
+  margin:0 2px 3px !important;
+  font-size:7px !important;
+  letter-spacing:1px !important;
+}
+.preconfigNav{
+  grid-template-columns:29px minmax(0,1fr) 29px !important;
+  gap:4px !important;
+}
+.preconfigNav .navbtn{
+  height:30px !important;
+  font-size:17px !important;
+}
+.preconfigNav select{
+  height:30px !important;
+  font-size:10px !important;
+  padding:0 6px !important;
+}
+.preconfigHint{
+  min-height:0 !important;
+  margin-top:5px !important;
+  font-size:7px !important;
+  line-height:1.2 !important;
+}
+/* The expanded cascade remains functional but becomes denser. */
+.channelSelector .selector{
+  margin-bottom:5px !important;
+  padding:7px 8px !important;
+  border-radius:9px !important;
+}
+.channelSelector .selHead{
+  gap:6px !important;
+  margin-bottom:5px !important;
+}
+.channelSelector .selHead .icon{font-size:11px !important}
+.channelSelector .selHead .label{font-size:8px !important;letter-spacing:.9px !important}
+.channelSelector .selHead .state{font-size:7px !important}
+.channelSelector .navrow{
+  grid-template-columns:32px minmax(0,1fr) 32px !important;
+  gap:4px !important;
+}
+.channelSelector .navbtn{height:30px !important;font-size:17px !important}
+.channelSelector select{height:30px !important;font-size:10px !important}
+.channelSelector .helper{font-size:7px !important;margin-top:4px !important}
+.cascadeStatus{padding:5px 2px 3px !important;font-size:7px !important;gap:4px !important}
+.stepDot{width:17px !important;height:17px !important;font-size:8px !important}
+.stepLine{width:8px !important}
+.cascadeMessage{min-height:22px !important;padding:4px 6px !important;font-size:7px !important}
+@media(max-width:700px){
+  .radioFinishBar{grid-template-columns:auto minmax(0,1fr) !important;gap:6px !important}
+  .radioFinishBar label > span{font-size:7px !important}
+  .radioFinishBar select{height:31px !important;font-size:10px !important}
+  .channelSelectorSummary,.preconfigSummary{height:37px !important;min-height:37px !important;padding:6px 9px !important;font-size:8.5px !important}
+}
+</style>
+
 </head>
 <body>
 
@@ -1091,8 +1443,28 @@ body.wrLight{
   <p>Explore live radio from around the world through a modern interface inspired by the soul of the classic radio receiver.</p>
 </section>
 <main class="shell">
+      <div class="radioFinishBar">
+        <label for="radioFinish"><span>RADIO FINISH</span>
+          <select id="radioFinish" aria-label="Change radio unit colour pattern">
+            <option value="walnut">Classic Walnut</option>
+            <option value="black">Black Metal</option>
+            <option value="silver">Silver &amp; Charcoal</option>
+            <option value="ivory">Ivory Vintage</option>
+            <option value="teal">Deep Teal</option>
+          </select>
+        </label>
+      </div>
+
     <section class="controls">
-      <div class="sectionTitle">SELECT YOUR RADIO JOURNEY</div>
+      <details class="channelSelector" id="channelSelector">
+        <summary class="channelSelectorSummary">
+          <span class="channelCaret" aria-hidden="true">▼</span>
+          <span class="channelSelectorTitle">SELECT YOUR CHANNEL</span>
+          <span class="channelSelectorDot" aria-hidden="true">•</span>
+          <span class="channelSelectorAction">Expand</span>
+        </summary>
+        <div class="channelSelectorBody">
+          <div class="sectionTitle">SELECT YOUR RADIO JOURNEY</div>
 
       <div class="selector active" id="box-language">
         <div class="selHead">
@@ -1152,10 +1524,13 @@ body.wrLight{
         <span class="stepDot" id="step4">4</span><span>Station</span>
       </div>
       <div class="cascadeMessage" id="cascadeMessage">Choose a language to begin.</div>
+        </div>
+      </details>
     </section>
 
     <section class="radio">
-      <div class="bezel">
+      <div class="radioUnit" id="radioUnit">
+        <div class="bezel">
         <div class="displayTop">
           <div class="metric"><div class="metricLabel">COUNTRY</div><div class="metricValue" id="dCountry">—</div></div>
           <div class="metric"><div class="metricLabel">LANGUAGE</div><div class="metricValue cyan" id="dLanguage">—</div></div>
@@ -1189,7 +1564,12 @@ body.wrLight{
         </div>
 
         <details class="preconfig" id="preConfiguredChannels">
-          <summary>Pre-Configured Channels</summary>
+          <summary class="preconfigSummary">
+            <span class="preconfigCaret" aria-hidden="true">▼</span>
+            <span class="preconfigTitle">PRE-CONFIGURED LANGUAGE</span>
+            <span class="preconfigDot" aria-hidden="true">•</span>
+            <span class="preconfigAction">Expand</span>
+          </summary>
           <div class="preconfigBody">
             <div class="preconfigLanguages" role="radiogroup" aria-label="Pre-configured languages">
               <label class="preconfigLang">
@@ -1251,13 +1631,7 @@ body.wrLight{
           </div>
         </details>
 
-        <div class="playerHint" id="playerHint">Expanded worldwide station directory • Hindi, English and Bengali are not hard-coded; the application fetches currently available stations dynamically. The live spectrum activates only during actual live playback.</div>
         <audio class="audioEl" id="audio" preload="none" playsinline></audio>
-
-        <div class="bottomInfo">
-          <div class="readout">MODE<strong id="modeText">STANDBY</strong></div>
-          <div class="analogKnob" title="Decorative tuning knob"></div>
-          <div class="readout right">TUNING<strong id="tuningText">—</strong></div>
         </div>
       </div>
     </section>
@@ -1983,8 +2357,6 @@ function updateDisplay(){
   $('dFrequency').textContent='ONLINE';
   $('bigStation').textContent=s?.name||'SELECT A STATION';
   // The former city/status text block was intentionally removed from the display.
-  $('modeText').textContent=s?'STATION SELECTED':state.category?'CATEGORY':state.country?'COUNTRY':state.language?'LANGUAGE':'STANDBY';
-  $('tuningText').textContent=s?(s.bitrate?s.bitrate+' kbps':'ONLINE'):'—';
   $('pointer').style.left=s?(30+((Math.abs(hashCode(s.stationuuid))%650)/650)*40)+'%':'28%';
 }
 function hashCode(str){let h=0;for(let i=0;i<str.length;i++)h=((h<<5)-h)+str.charCodeAt(i)|0;return Math.abs(h)}
@@ -2271,6 +2643,34 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);syncPr
     }
   }
 })();
+
+
+/* =========================================================
+   PHYSICAL RADIO — COLOUR FINISH
+   The physical side controls were intentionally removed to maximize
+   vertical display space.  Colour finish remains user-selectable.
+   ========================================================= */
+(function(){
+  const unit=document.getElementById('radioUnit');
+  const finish=document.getElementById('radioFinish');
+  const FINISH_KEY='worldRadio_radioFinish_v1';
+  const finishClasses=['finish-walnut','finish-black','finish-silver','finish-ivory','finish-teal'];
+
+  function setFinish(name,save=true){
+    if(!unit)return;
+    finishClasses.forEach(c=>unit.classList.remove(c));
+    unit.classList.add('finish-'+name);
+    if(finish)finish.value=name;
+    if(save){try{localStorage.setItem(FINISH_KEY,name)}catch(e){}}
+  }
+
+  let saved='walnut';
+  try{saved=localStorage.getItem(FINISH_KEY)||'walnut'}catch(e){}
+  if(!finishClasses.includes('finish-'+saved))saved='walnut';
+  setFinish(saved,false);
+  finish?.addEventListener('change',()=>setFinish(finish.value,true));
+})();
+
 </script>
 
 <!-- ===== PHASE 8 FOOTER ===== -->
@@ -2415,6 +2815,53 @@ fillSelect(language,[],'Connecting…');setLevelEnabled('language',false);syncPr
 
 })();
 </script>
+
+
+<script id="physical-radio-hooks">
+(function(){
+  function applyPhysical(){
+    const s=typeof stationObject==='function'?stationObject():null;
+    window.__wrPhysicalRadio?.updateReception(s);
+    window.__wrPhysicalRadio?.animateTuning(s);
+  }
+  const originalUpdate=window.updateDisplay;
+  if(typeof originalUpdate==='function'){
+    window.updateDisplay=function(){
+      originalUpdate();
+      applyPhysical();
+    };
+  }
+  document.addEventListener('change',e=>{
+    if(['station','preconfigStation'].includes(e.target?.id))setTimeout(applyPhysical,0);
+  });
+  setInterval(applyPhysical,700);
+})();
+</script>
+
+
+<style id="physical-radio-clean-face">
+/* Physical radio v2: the former left/right hardware areas are removed.
+   The central display now occupies the full radio cabinet width. */
+.radioUnit{
+  width:100%;
+  max-width:100%;
+}
+.radioUnit .bezel{
+  width:100%;
+  box-sizing:border-box;
+  min-height:760px;
+  border-radius:24px;
+}
+@media(max-width:950px){
+  .radioUnit .bezel{min-height:700px}
+}
+@media(max-width:700px){
+  .radioUnit .bezel{min-height:620px;border-radius:18px}
+}
+@media(max-width:430px){
+  .radioUnit .bezel{min-height:590px}
+}
+</style>
 
 </body>
 </html>
