@@ -1629,6 +1629,896 @@ body.wrLight{
 }
 </style>
 
+
+
+<style id="world-radio-language-control-v2">
+/* =========================================================
+   LANGUAGE CONTROL V2
+   Joined Prev | Language | Next control.
+   All dimensions are fluid and constrained to the parent width
+   so the control cannot create horizontal scrolling on mobile.
+   ========================================================= */
+
+.languageSelector{
+  min-width:0 !important;
+  width:100% !important;
+  max-width:100% !important;
+}
+
+.languageSelHead{
+  min-width:0 !important;
+}
+
+.languageSelHead .label{
+  min-width:0;
+}
+
+.languageNav{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(60px,.74fr) minmax(0,1.72fr) minmax(60px,.74fr);
+  gap:0;
+  align-items:stretch;
+  overflow:hidden;
+  border:1px solid #2e6072;
+  border-radius:11px;
+  background:#071821;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.12),
+    inset 0 -2px 5px rgba(0,0,0,.45),
+    0 0 12px rgba(84,217,255,.08);
+}
+
+.languageNavBtn,
+.languageSelectShell{
+  min-width:0;
+  width:100%;
+  height:42px;
+  box-sizing:border-box;
+}
+
+.languageNavBtn{
+  appearance:none;
+  border:0;
+  margin:0;
+  padding:0 clamp(3px,1vw,9px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:clip;
+  color:#e4f4f8;
+  font-size:clamp(9px,1.05vw,12px);
+  font-weight:800;
+  letter-spacing:.35px;
+  line-height:1;
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  text-shadow:0 1px 4px rgba(0,0,0,.7);
+  background:
+    linear-gradient(180deg,#1b556d 0%,#124057 44%,#0a2a3a 100%);
+  box-shadow:
+    inset 0 1px rgba(195,239,249,.30),
+    inset 0 -2px 5px rgba(0,0,0,.45);
+  transition:
+    filter .18s ease,
+    box-shadow .18s ease,
+    background .18s ease,
+    transform .12s ease;
+}
+
+.languageNavPrev{
+  border-right:1px solid #47798a;
+  border-radius:9px 0 0 9px;
+}
+
+.languageNavNext{
+  border-left:1px solid #47798a;
+  border-radius:0 9px 9px 0;
+}
+
+.languageNavBtn:hover:not(:disabled){
+  filter:brightness(1.14);
+  box-shadow:
+    inset 0 1px rgba(220,249,255,.38),
+    inset 0 -2px 5px rgba(0,0,0,.42),
+    0 0 10px rgba(84,217,255,.13);
+}
+
+.languageNavBtn:active:not(:disabled){
+  transform:translateY(1px);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.52),
+    inset 0 -1px rgba(220,249,255,.12);
+}
+
+.languageNavBtn:disabled{
+  opacity:.28;
+  cursor:not-allowed;
+  filter:saturate(.55);
+}
+
+.languageNavBtn:focus-visible,
+.languageSelectShell:focus-within{
+  outline:2px solid #54d9ff;
+  outline-offset:-2px;
+  position:relative;
+  z-index:4;
+}
+
+/* Central segment. The native select remains the real functional control. */
+.languageSelectShell{
+  position:relative;
+  background:
+    linear-gradient(180deg,#173b4b 0%,#102d39 46%,#0a202b 100%);
+  box-shadow:
+    inset 0 1px rgba(210,244,250,.18),
+    inset 0 -2px 5px rgba(0,0,0,.38);
+}
+
+.languageSelectShell::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  width:8px;
+  height:8px;
+  border-right:2px solid #a9e9f7;
+  border-bottom:2px solid #a9e9f7;
+  transform:translateY(-68%) rotate(45deg);
+  pointer-events:none;
+  filter:drop-shadow(0 0 4px rgba(84,217,255,.45));
+}
+
+.languageSelectShell select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  display:block;
+  width:100%;
+  height:100%;
+  min-width:0;
+  margin:0;
+  padding:0 38px 0 14px;
+  border:0 !important;
+  border-radius:0 !important;
+  outline:none;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#f3f8fa;
+  background:transparent !important;
+  box-shadow:none !important;
+  cursor:pointer;
+  font-size:clamp(10px,1.1vw,13px);
+  font-weight:700;
+}
+
+.languageSelectShell select:disabled{
+  cursor:not-allowed;
+  opacity:.72;
+}
+
+/* Small helper remains below the joined control. */
+.languageHelper{
+  margin-top:6px !important;
+}
+
+@media(max-width:700px){
+  .languageNav{
+    grid-template-columns:minmax(58px,.72fr) minmax(0,1.76fr) minmax(58px,.72fr);
+    border-radius:10px;
+  }
+
+  .languageNavBtn,
+  .languageSelectShell{
+    height:44px;
+  }
+
+  .languageNavBtn{
+    font-size:clamp(8.5px,2.7vw,11px);
+    letter-spacing:.15px;
+    padding-left:2px;
+    padding-right:2px;
+  }
+
+  .languageSelectShell select{
+    font-size:16px;
+    padding-left:10px;
+    padding-right:31px;
+  }
+
+  .languageSelectShell::after{
+    right:10px;
+    width:7px;
+    height:7px;
+  }
+
+  .languageHelper{
+    font-size:8px !important;
+    line-height:1.2 !important;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
+
+@media(max-width:360px){
+  .languageNav{
+    grid-template-columns:minmax(54px,.70fr) minmax(0,1.82fr) minmax(54px,.70fr);
+  }
+
+  .languageNavBtn{
+    font-size:8px;
+    letter-spacing:0;
+  }
+
+  .languageSelectShell select{
+    font-size:16px;
+    padding-left:8px;
+    padding-right:28px;
+  }
+
+  .languageSelectShell::after{
+    right:9px;
+  }
+}
+
+@media(max-width:320px){
+  .languageNav{
+    grid-template-columns:minmax(50px,.68fr) minmax(0,1.88fr) minmax(50px,.68fr);
+  }
+
+  .languageNavBtn{
+    font-size:7.5px;
+  }
+
+  .languageSelectShell select{
+    padding-left:7px;
+    padding-right:25px;
+  }
+}
+</style>
+
+
+<style id="world-radio-journey-controls-v1">
+/* =========================================================
+   WORLD RADIO — UNIFIED CASCADE NAVIGATION
+   Country / Category / Station use the same joined control
+   design as the Language selector. Existing select/button IDs
+   are preserved so all JavaScript behaviour remains unchanged.
+   ========================================================= */
+.journeyNav{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  display:grid !important;
+  grid-template-columns:minmax(60px,.74fr) minmax(0,1.72fr) minmax(60px,.74fr) !important;
+  gap:0 !important;
+  align-items:stretch !important;
+  overflow:hidden;
+  border:1px solid #2e6072;
+  border-radius:11px;
+  background:#071821;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.12),
+    inset 0 -2px 5px rgba(0,0,0,.45),
+    0 0 12px rgba(84,217,255,.08);
+}
+
+.journeyNavBtn,
+.journeySelectShell{
+  min-width:0;
+  width:100%;
+  height:42px !important;
+  box-sizing:border-box;
+}
+
+.journeyNavBtn{
+  appearance:none;
+  border:0 !important;
+  margin:0 !important;
+  padding:0 clamp(3px,1vw,9px) !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:clip;
+  color:#e4f4f8 !important;
+  font-size:clamp(9px,1.05vw,12px) !important;
+  font-weight:800 !important;
+  letter-spacing:.35px;
+  line-height:1 !important;
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  text-shadow:0 1px 4px rgba(0,0,0,.7);
+  background:
+    linear-gradient(180deg,#1b556d 0%,#124057 44%,#0a2a3a 100%) !important;
+  box-shadow:
+    inset 0 1px rgba(195,239,249,.30),
+    inset 0 -2px 5px rgba(0,0,0,.45) !important;
+  transition:
+    filter .18s ease,
+    box-shadow .18s ease,
+    background .18s ease,
+    transform .12s ease;
+}
+
+.journeyNavPrev{
+  border-right:1px solid #47798a !important;
+  border-radius:9px 0 0 9px !important;
+}
+
+.journeyNavNext{
+  border-left:1px solid #47798a !important;
+  border-radius:0 9px 9px 0 !important;
+}
+
+.journeyNavBtn:hover:not(:disabled){
+  filter:brightness(1.14);
+  box-shadow:
+    inset 0 1px rgba(220,249,255,.38),
+    inset 0 -2px 5px rgba(0,0,0,.42),
+    0 0 10px rgba(84,217,255,.13) !important;
+}
+
+.journeyNavBtn:active:not(:disabled){
+  transform:translateY(1px);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.52),
+    inset 0 -1px rgba(220,249,255,.12) !important;
+}
+
+.journeyNavBtn:disabled{
+  opacity:.42 !important;
+  cursor:not-allowed;
+  filter:saturate(.55);
+}
+
+.journeyNavBtn:focus-visible,
+.journeySelectShell:focus-within{
+  outline:2px solid #54d9ff;
+  outline-offset:-2px;
+  position:relative;
+  z-index:4;
+}
+
+.journeySelectShell{
+  position:relative;
+  background:
+    linear-gradient(180deg,#173b4b 0%,#102d39 46%,#0a202b 100%);
+  box-shadow:
+    inset 0 1px rgba(210,244,250,.18),
+    inset 0 -2px 5px rgba(0,0,0,.38);
+}
+
+.journeySelectShell::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  width:8px;
+  height:8px;
+  border-right:2px solid #a9e9f7;
+  border-bottom:2px solid #a9e9f7;
+  transform:translateY(-68%) rotate(45deg);
+  pointer-events:none;
+  filter:drop-shadow(0 0 4px rgba(84,217,255,.45));
+}
+
+.journeySelectShell select{
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  -moz-appearance:none !important;
+  display:block;
+  width:100%;
+  height:100% !important;
+  min-width:0;
+  margin:0;
+  padding:0 38px 0 16px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  outline:none;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-align:left !important;
+  text-align-last:left !important;
+  color:#f3f8fa !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  cursor:pointer;
+  font-size:clamp(11px,1.15vw,15px) !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+}
+
+.journeySelectShell select:disabled{
+  cursor:not-allowed;
+  opacity:.72;
+}
+
+@media(max-width:700px){
+  .journeyNav{
+    grid-template-columns:minmax(58px,.72fr) minmax(0,1.76fr) minmax(58px,.72fr) !important;
+    border-radius:10px;
+  }
+
+  .journeyNavBtn,
+  .journeySelectShell{
+    height:44px !important;
+  }
+
+  .journeyNavBtn{
+    font-size:clamp(8.5px,2.7vw,11px) !important;
+    letter-spacing:.15px;
+    padding-left:2px !important;
+    padding-right:2px !important;
+  }
+
+  .journeySelectShell select{
+    font-size:16px !important;
+    padding-left:14px !important;
+    padding-right:34px !important;
+  }
+
+  .journeySelectShell::after{
+    right:10px;
+    width:7px;
+    height:7px;
+  }
+}
+
+@media(max-width:360px){
+  .journeyNav{
+    grid-template-columns:minmax(54px,.70fr) minmax(0,1.82fr) minmax(54px,.70fr) !important;
+  }
+
+  .journeyNavBtn{
+    font-size:8px !important;
+    letter-spacing:0;
+  }
+
+  .journeySelectShell select{
+    font-size:16px !important;
+    padding-left:10px !important;
+    padding-right:29px !important;
+  }
+
+  .journeySelectShell::after{
+    right:9px;
+  }
+}
+
+@media(max-width:320px){
+  .journeyNav{
+    grid-template-columns:minmax(50px,.68fr) minmax(0,1.88fr) minmax(50px,.68fr) !important;
+  }
+
+  .journeyNavBtn{
+    font-size:7.5px !important;
+  }
+
+  .journeySelectShell select{
+    padding-left:9px !important;
+    padding-right:26px !important;
+  }
+}
+</style>
+
+
+<style id="world-radio-final-four-tab-navigation">
+/* =========================================================
+   FINAL 4-TAB UNIFIED NAVIGATION
+   Language + Country/People + Category + Station
+   Same physical-radio joined control design for all four.
+   Existing element IDs and JavaScript hooks are unchanged.
+   ========================================================= */
+
+/* Common dimensions and geometry */
+.languageNav,
+.journeyNav{
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  display:grid !important;
+  grid-template-columns:minmax(82px,.74fr) minmax(0,1.72fr) minmax(82px,.74fr) !important;
+  gap:0 !important;
+  align-items:stretch !important;
+  overflow:hidden !important;
+  border:1px solid #2e6072 !important;
+  border-radius:12px !important;
+  background:#071821 !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.12),inset 0 -2px 5px rgba(0,0,0,.45),0 0 12px rgba(84,217,255,.08) !important;
+}
+
+.languageNavBtn,
+.journeyNavBtn,
+.languageSelectShell,
+.journeySelectShell{
+  min-width:0 !important;
+  width:100% !important;
+  height:52px !important;
+  box-sizing:border-box !important;
+}
+
+/* Prev / Next segments */
+.languageNavBtn,
+.journeyNavBtn{
+  appearance:none !important;
+  border:0 !important;
+  margin:0 !important;
+  padding:0 10px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-overflow:clip !important;
+  color:#f1fbfd !important;
+  font-size:15px !important;
+  font-weight:800 !important;
+  letter-spacing:.2px !important;
+  line-height:1 !important;
+  text-align:center !important;
+  cursor:pointer !important;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  text-shadow:0 1px 4px rgba(0,0,0,.7);
+  background:linear-gradient(180deg,#1b556d 0%,#124057 44%,#0a2a3a 100%) !important;
+  box-shadow:inset 0 1px rgba(195,239,249,.30),inset 0 -2px 5px rgba(0,0,0,.45) !important;
+  transition:filter .18s ease,box-shadow .18s ease,background .18s ease,transform .12s ease;
+}
+
+.languageNavPrev,
+.journeyNavPrev{
+  border-right:1px solid #47798a !important;
+  border-radius:11px 0 0 11px !important;
+}
+.languageNavNext,
+.journeyNavNext{
+  border-left:1px solid #47798a !important;
+  border-radius:0 11px 11px 0 !important;
+}
+
+.languageNavBtn:hover:not(:disabled),
+.journeyNavBtn:hover:not(:disabled){
+  filter:brightness(1.14);
+  box-shadow:inset 0 1px rgba(220,249,255,.38),inset 0 -2px 5px rgba(0,0,0,.42),0 0 10px rgba(84,217,255,.13) !important;
+}
+.languageNavBtn:active:not(:disabled),
+.journeyNavBtn:active:not(:disabled){
+  transform:translateY(1px);
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.52),inset 0 -1px rgba(220,249,255,.12) !important;
+}
+.languageNavBtn:disabled,
+.journeyNavBtn:disabled{
+  opacity:.42 !important;
+  cursor:not-allowed !important;
+  filter:saturate(.55);
+}
+
+/* Middle dropdown segment */
+.languageSelectShell,
+.journeySelectShell{
+  position:relative !important;
+  background:linear-gradient(180deg,#173b4b 0%,#102d39 46%,#0a202b 100%) !important;
+  box-shadow:inset 0 1px rgba(210,244,250,.18),inset 0 -2px 5px rgba(0,0,0,.38) !important;
+}
+
+.languageSelectShell::after,
+.journeySelectShell::after{
+  content:"" !important;
+  position:absolute !important;
+  right:17px !important;
+  top:50% !important;
+  width:11px !important;
+  height:11px !important;
+  border-right:3px solid #a9e9f7 !important;
+  border-bottom:3px solid #a9e9f7 !important;
+  transform:translateY(-68%) rotate(45deg) !important;
+  pointer-events:none !important;
+  filter:drop-shadow(0 0 4px rgba(84,217,255,.45));
+}
+
+.languageSelectShell select,
+.journeySelectShell select{
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  -moz-appearance:none !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 48px 0 20px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  outline:none !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  text-align:left !important;
+  text-align-last:left !important;
+  color:#f3f8fa !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  cursor:pointer !important;
+  font-size:18px !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+}
+
+.languageSelectShell select:disabled,
+.journeySelectShell select:disabled{
+  cursor:not-allowed !important;
+  opacity:.72;
+}
+
+.languageNavBtn:focus-visible,
+.journeyNavBtn:focus-visible,
+.languageSelectShell:focus-within,
+.journeySelectShell:focus-within{
+  outline:2px solid #54d9ff !important;
+  outline-offset:-2px !important;
+  position:relative;
+  z-index:4;
+}
+
+/* Keep the four selector blocks visually consistent */
+.channelSelector .selector{
+  min-width:0 !important;
+}
+
+@media(max-width:700px){
+  .languageNav,
+  .journeyNav{
+    grid-template-columns:minmax(72px,.72fr) minmax(0,1.76fr) minmax(72px,.72fr) !important;
+    border-radius:10px !important;
+  }
+
+  .languageNavBtn,
+  .journeyNavBtn,
+  .languageSelectShell,
+  .journeySelectShell{
+    height:50px !important;
+  }
+
+  .languageNavBtn,
+  .journeyNavBtn{
+    font-size:13px !important;
+    padding-left:4px !important;
+    padding-right:4px !important;
+  }
+
+  .languageSelectShell select,
+  .journeySelectShell select{
+    font-size:16px !important;
+    padding-left:15px !important;
+    padding-right:40px !important;
+  }
+
+  .languageSelectShell::after,
+  .journeySelectShell::after{
+    right:13px !important;
+    width:9px !important;
+    height:9px !important;
+    border-width:2px !important;
+  }
+}
+
+@media(max-width:360px){
+  .languageNav,
+  .journeyNav{
+    grid-template-columns:minmax(62px,.70fr) minmax(0,1.82fr) minmax(62px,.70fr) !important;
+  }
+  .languageNavBtn,
+  .journeyNavBtn{
+    font-size:11px !important;
+  }
+  .languageSelectShell select,
+  .journeySelectShell select{
+    font-size:16px !important;
+    padding-left:12px !important;
+    padding-right:34px !important;
+  }
+}
+
+@media(max-width:320px){
+  .languageNav,
+  .journeyNav{
+    grid-template-columns:minmax(56px,.68fr) minmax(0,1.88fr) minmax(56px,.68fr) !important;
+  }
+  .languageNavBtn,
+  .journeyNavBtn{
+    font-size:10px !important;
+  }
+}
+</style>
+
+
+<style id="final-unified-radio-navigation">
+/*
+  FINAL FOUR-SELECTOR NAVIGATION
+  Exact common geometry:
+       24%          52%          24%
+  Prev |       WIDE SELECTOR       | Next
+*/
+.unifiedRadioNav{
+  width:100% !important;
+  height:46px !important;
+  margin:0 !important;
+  padding:0 !important;
+  display:grid !important;
+  grid-template-columns:minmax(76px,24%) minmax(0,52%) minmax(76px,24%) !important;
+  align-items:stretch !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+  border:1px solid #47798a !important;
+  border-radius:10px !important;
+  background:linear-gradient(180deg,#143746 0%,#0b202a 100%) !important;
+  box-shadow:
+    inset 0 1px rgba(220,249,255,.12),
+    inset 0 -2px 5px rgba(0,0,0,.42) !important;
+}
+
+.unifiedRadioNavBtn{
+  min-width:0 !important;
+  width:100% !important;
+  height:100% !important;
+  margin:0 !important;
+  padding:0 6px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-sizing:border-box !important;
+  color:#eaf7fa !important;
+  background:linear-gradient(180deg,#173f50 0%,#0e2935 100%) !important;
+  font-family:inherit !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+  letter-spacing:.15px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  cursor:pointer !important;
+}
+
+.unifiedRadioNavBtn:first-child{
+  border-right:1px solid #47798a !important;
+}
+.unifiedRadioNavBtn:last-child{
+  border-left:1px solid #47798a !important;
+}
+.unifiedRadioNavBtn:hover:not(:disabled){
+  filter:brightness(1.14) !important;
+}
+.unifiedRadioNavBtn:active:not(:disabled){
+  transform:translateY(1px);
+}
+.unifiedRadioNavBtn:disabled{
+  opacity:.28 !important;
+  cursor:not-allowed !important;
+}
+
+/* Wide central selector */
+.unifiedRadioSelectShell{
+  position:relative !important;
+  min-width:0 !important;
+  width:100% !important;
+  height:100% !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+  background:linear-gradient(180deg,#173b4b 0%,#102d39 46%,#0a202b 100%) !important;
+  box-shadow:
+    inset 0 1px rgba(210,244,250,.18),
+    inset 0 -2px 5px rgba(0,0,0,.38) !important;
+}
+
+.unifiedRadioSelectShell:after{
+  content:"" !important;
+  position:absolute !important;
+  right:15px !important;
+  top:50% !important;
+  width:8px !important;
+  height:8px !important;
+  border-right:2px solid #a9e9f7 !important;
+  border-bottom:2px solid #a9e9f7 !important;
+  transform:translateY(-68%) rotate(45deg) !important;
+  pointer-events:none !important;
+}
+
+.unifiedRadioSelectShell select{
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  -moz-appearance:none !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 42px 0 16px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  outline:none !important;
+  box-sizing:border-box !important;
+  color:#f3f8fa !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  font-family:inherit !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+  text-align:left !important;
+  text-align-last:left !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  cursor:pointer !important;
+}
+
+.unifiedRadioSelectShell select:disabled{
+  cursor:not-allowed !important;
+  opacity:.72 !important;
+}
+
+.unifiedRadioSelectShell:focus-within{
+  outline:2px solid #54d9ff !important;
+  outline-offset:-2px !important;
+  position:relative;
+  z-index:4;
+}
+
+/* Mobile: keep the same proportions while guaranteeing button text stays inside. */
+@media(max-width:700px){
+  .unifiedRadioNav{
+    height:46px !important;
+    grid-template-columns:minmax(72px,25%) minmax(0,50%) minmax(72px,25%) !important;
+  }
+
+  .unifiedRadioNavBtn{
+    font-size:11px !important;
+    padding:0 3px !important;
+    letter-spacing:0 !important;
+  }
+
+  .unifiedRadioSelectShell select{
+    font-size:16px !important;
+    padding-left:12px !important;
+    padding-right:34px !important;
+  }
+
+  .unifiedRadioSelectShell:after{
+    right:11px !important;
+    width:7px !important;
+    height:7px !important;
+  }
+}
+
+@media(max-width:380px){
+  .unifiedRadioNav{
+    grid-template-columns:minmax(68px,25%) minmax(0,50%) minmax(68px,25%) !important;
+  }
+
+  .unifiedRadioNavBtn{
+    font-size:10px !important;
+  }
+
+  .unifiedRadioSelectShell select{
+    padding-left:10px !important;
+    padding-right:30px !important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -1663,26 +2553,34 @@ body.wrLight{
         <div class="channelSelectorBody">
           <div class="sectionTitle">SELECT YOUR RADIO JOURNEY</div>
 
-      <div class="selector active" id="box-language">
-        <div class="selHead">
+      <div class="selector active languageSelector" id="box-language">
+        <div class="selHead languageSelHead">
           <div class="icon">🌐</div><div class="label">LANGUAGE</div><div class="state" id="state-language">READY</div>
         </div>
-        <div class="navrow">
-          <button class="navbtn" id="prev-language" aria-label="Previous language">‹</button>
-          <select id="language"></select>
-          <button class="navbtn" id="next-language" aria-label="Next language">›</button>
+
+        <div class="unifiedRadioNav" id="languageNav" role="group" aria-label="Language navigation">
+          <button class="unifiedRadioNavBtn" id="prev-language" type="button" aria-label="Previous language">‹‹&nbsp; Prev</button>
+
+          <div class="unifiedRadioSelectShell">
+            <select id="language" aria-label="Select language"></select>
+          </div>
+
+          <button class="unifiedRadioNavBtn" id="next-language" type="button" aria-label="Next language">Next&nbsp; ››</button>
         </div>
-        <div class="helper">Dropdown optional — use the arrows to browse.</div>
+
+        <div class="helper languageHelper">Dropdown optional — use the arrows to browse.</div>
       </div>
 
       <div class="selector disabled" id="box-country">
         <div class="selHead">
           <div class="icon">👤</div><div class="label">COUNTRY / PEOPLE</div><div class="state" id="state-country">WAITING</div>
         </div>
-        <div class="navrow">
-          <button class="navbtn" id="prev-country" disabled>‹</button>
-          <select id="country" disabled></select>
-          <button class="navbtn" id="next-country" disabled>›</button>
+        <div class="unifiedRadioNav">
+          <button class="unifiedRadioNavBtn" id="prev-country" type="button" aria-label="Previous country" disabled>‹‹&nbsp; Prev</button>
+          <div class="unifiedRadioSelectShell">
+            <select id="country" disabled></select>
+          </div>
+          <button class="unifiedRadioNavBtn" id="next-country" type="button" aria-label="Next country" disabled>Next&nbsp; ››</button>
         </div>
         <div class="helper" id="country-helper">Choose a language first.</div>
       </div>
@@ -1691,10 +2589,12 @@ body.wrLight{
         <div class="selHead">
           <div class="icon">🎙️</div><div class="label">CATEGORY</div><div class="state" id="state-category">WAITING</div>
         </div>
-        <div class="navrow">
-          <button class="navbtn" id="prev-category" disabled>‹</button>
-          <select id="category" disabled></select>
-          <button class="navbtn" id="next-category" disabled>›</button>
+        <div class="unifiedRadioNav">
+          <button class="unifiedRadioNavBtn" id="prev-category" type="button" aria-label="Previous category" disabled>‹‹&nbsp; Prev</button>
+          <div class="unifiedRadioSelectShell">
+            <select id="category" disabled></select>
+          </div>
+          <button class="unifiedRadioNavBtn" id="next-category" type="button" aria-label="Next category" disabled>Next&nbsp; ››</button>
         </div>
         <div class="helper" id="category-helper">Choose a country first.</div>
       </div>
@@ -1703,10 +2603,12 @@ body.wrLight{
         <div class="selHead">
           <div class="icon">📻</div><div class="label">STATION</div><div class="state" id="state-station">WAITING</div>
         </div>
-        <div class="navrow">
-          <button class="navbtn" id="prev-station" disabled>‹</button>
-          <select id="station" disabled></select>
-          <button class="navbtn" id="next-station" disabled>›</button>
+        <div class="unifiedRadioNav">
+          <button class="unifiedRadioNavBtn" id="prev-station" type="button" aria-label="Previous station" disabled>‹‹&nbsp; Prev</button>
+          <div class="unifiedRadioSelectShell">
+            <select id="station" disabled></select>
+          </div>
+          <button class="unifiedRadioNavBtn" id="next-station" type="button" aria-label="Next station" disabled>Next&nbsp; ››</button>
         </div>
         <div class="helper" id="station-helper">Choose a category first.</div>
       </div>
